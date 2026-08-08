@@ -173,7 +173,7 @@ textarea{
   border:0;
   border-radius:15px;
   background:#7657ff;
-  color:white;
+  color:#fff;
 }
 
 .tools{
@@ -356,76 +356,25 @@ textarea{
   background:#332c42;
 }
 
-.attachment{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  background:#15121f;
-  border:1px solid #352d45;
-  border-radius:14px;
-  padding:10px;
-  margin-top:10px;
-  text-align:right;
-}
-
-.attachment img,
-.attachment video{
-  width:70px;
-  height:55px;
-  object-fit:cover;
-  border-radius:10px;
-}
-
-.attachment .name{
-  flex:1;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-}
-
-.remove{
-  background:#332c42;
-  border:0;
-  color:#fff;
-  border-radius:10px;
-  padding:7px 10px;
-}
-
-.notice{
+.status{
   color:#aaa3bd;
   font-size:13px;
-  line-height:1.7;
-  margin-top:12px;
-}
-
-.loading{
-  padding:10px;
-}
-
-.progress{
-  height:8px;
-  background:#29233a;
-  border-radius:10px;
-  overflow:hidden;
-  margin-top:10px;
-}
-
-.progress i{
-  display:block;
-  width:30%;
-  height:100%;
-  background:#7657ff;
-  animation:load 1.2s infinite alternate;
-}
-
-@keyframes load{
-  to{width:85%}
+  margin-top:8px;
 }
 
 @media(max-width:700px){
-  .sidebar{display:none}
-  .hero h1{font-size:32px}
-  .message{max-width:90%}
+
+  .sidebar{
+    display:none;
+  }
+
+  .hero h1{
+    font-size:32px;
+  }
+
+  .message{
+    max-width:90%;
+  }
 }
 </style>
 </head>
@@ -492,6 +441,8 @@ onclick="setCharacter('ady')">
 </header>
 
 
+<!-- الرئيسية -->
+
 <section id="home" class="page">
 
 <div class="hero">
@@ -505,16 +456,16 @@ onclick="setCharacter('ady')">
 </h1>
 
 <p>
-مساعدك الذكي للدراسة والمحادثة وإنشاء الصور والفيديوهات.
+مساعدك الذكي للدراسة والمحادثة وإنشاء الصور.
 </p>
 
-
-<div class="box" style="margin-top:30px">
+<div
+class="box"
+style="margin-top:30px">
 
 <textarea
 id="homePrompt"
-placeholder="اسألي ساره أو عدي أي شيء...">
-</textarea>
+placeholder="اسألي ساره أو عدي أي شيء..."></textarea>
 
 <button
 class="send"
@@ -524,13 +475,12 @@ onclick="sendHomeMessage()">
 
 </div>
 
-
 <div class="tools">
 
 <button
 class="tool"
 onclick="pickChatFile()">
-📎 صورة أو فيديو أو ملف
+📎 صورة / فيديو / ملف
 </button>
 
 <button
@@ -547,32 +497,38 @@ onclick="openVoiceCall()">
 
 </div>
 
-
 <input
-id="homeFileInput"
+id="fileInput"
 type="file"
 accept="image/*,video/*,.pdf,.txt,.md,.csv"
-hidden
-onchange="fileSelected(this)"
->
+style="display:none"
+onchange="fileSelected(this)">
+
+<div
+id="homeAttachment"
+class="status">
+</div>
 
 </div>
 
 </section>
 
 
+<!-- المحادثة -->
 
-<section id="chat" class="page chat">
+<section
+id="chat"
+class="page chat">
 
 <div
 id="messages"
 class="messages">
 </div>
 
-
-<div id="attachmentStatus">
+<div
+id="attachmentStatus"
+class="status">
 </div>
-
 
 <div class="composer">
 
@@ -580,8 +536,7 @@ class="messages">
 
 <textarea
 id="chatInput"
-placeholder="اكتبي رسالتك...">
-</textarea>
+placeholder="اكتبي رسالتك..."></textarea>
 
 <button
 class="send"
@@ -591,19 +546,12 @@ onclick="sendChat()">
 
 </div>
 
-
 <div class="tools">
 
 <button
 class="tool"
 onclick="pickChatFile()">
-📎 إرفاق صورة/فيديو/ملف
-</button>
-
-<button
-class="tool"
-onclick="showCreator()">
-🎨 إنشاء
+📎 إرفاق صورة / فيديو / ملف
 </button>
 
 <button
@@ -614,22 +562,23 @@ onclick="openVoiceCall()">
 
 </div>
 
-
 <input
 id="chatFile"
 type="file"
 accept="image/*,video/*,.pdf,.txt,.md,.csv"
-hidden
-onchange="fileSelected(this)"
->
+style="display:none"
+onchange="fileSelected(this)">
 
 </div>
 
 </section>
 
 
+<!-- الإنشاء -->
 
-<section id="creator" class="page creator">
+<section
+id="creator"
+class="page creator">
 
 <div class="creator-card">
 
@@ -638,31 +587,22 @@ onchange="fileSelected(this)"
 </h2>
 
 <p style="color:#aaa3bd">
-أنشئي صورة أو فيديو من وصفك، أو أرفقي صورة لتحويلها.
+أنشئي صورة أو عدّلي صورة باستخدام Gemini.
 </p>
 
-
-<select
-id="creatorType"
-onchange="creatorTypeChanged()">
+<select id="creatorType">
 
 <option value="image">
-🖼️ إنشاء / تعديل صورة
-</option>
-
-<option value="video">
-🎬 إنشاء فيديو
+🖼️ إنشاء صورة
 </option>
 
 </select>
 
-
 <textarea
 id="creativePrompt"
 rows="5"
-placeholder="مثال: فتاة تدرس في مكتبة جامعية مستقبلية...">
+placeholder="مثال: بنت تدرس في مكتبة جامعية مستقبلية...">
 </textarea>
-
 
 <select id="aspect">
 
@@ -680,52 +620,29 @@ placeholder="مثال: فتاة تدرس في مكتبة جامعية مستقب
 
 </select>
 
-
 <button
 class="tool"
-style="width:100%"
-onclick="pickCreativeImage()">
-
-📷 أرفقي صورة لاستخدامها
-
+onclick="document.getElementById('creativeImage').click()">
+📷 أرفقي صورة لتعديلها
 </button>
-
 
 <input
 id="creativeImage"
 type="file"
 accept="image/*"
-hidden
-onchange="creativeImageSelected(this)"
->
-
-
-<div id="creativeAttachment">
-</div>
-
+style="display:none"
+onchange="creativeImageSelected(this)">
 
 <button
 class="generate"
 onclick="generateCreative()">
-
 ✨ إنشاء الآن
-
 </button>
-
 
 <div
 id="creativeResult"
 class="result">
-
 النتيجة ستظهر هنا
-
-</div>
-
-
-<div class="notice">
-
-ملاحظة: إنشاء الصور والفيديو يعتمد على النماذج والصلاحيات المتاحة لمفتاح Gemini.
-
 </div>
 
 </div>
@@ -733,14 +650,14 @@ class="result">
 </section>
 
 </main>
-
 </div>
 
 
+<!-- إعدادات Gemini -->
 
-<!-- SETTINGS -->
-
-<div id="settings" class="modal">
+<div
+id="settings"
+class="modal">
 
 <div class="modal-card">
 
@@ -755,101 +672,108 @@ class="result">
 <input
 id="apiKey"
 type="password"
-placeholder="Gemini API Key"
->
+placeholder="Gemini API Key">
 
 <button
 class="generate"
 onclick="saveKey()">
-
 💾 حفظ المفتاح
-
 </button>
 
 <button
 class="tool"
 style="width:100%;margin-top:10px"
 onclick="closeSettings()">
-
 إغلاق
-
 </button>
 
-<p class="notice">
-
-للتجربة الشخصية يمكن حفظ المفتاح في المتصفح.
-
-</p>
-
 </div>
-
 </div>
 
 
+<!-- المكالمة -->
 
-<!-- VOICE -->
-
-<div id="voiceCall" class="voice-call">
+<div
+id="voiceCall"
+class="voice-call">
 
 <div class="voice-card">
 
-<div id="voiceAvatar" class="avatar">
+<div
+id="voiceAvatar"
+class="avatar">
 👩🏻
 </div>
 
-<div id="voiceName" class="voice-name">
+<div
+id="voiceName"
+class="voice-name">
 ساره
 </div>
 
-<div id="voiceStatus" class="voice-status">
+<div
+id="voiceStatus"
+class="voice-status">
 اضغطي ابدأ وتكلمي
 </div>
 
-<div id="transcript" class="transcript">
+<div
+id="transcript"
+class="transcript">
 المحادثة الصوتية ستظهر هنا...
 </div>
 
 <div class="voice-buttons">
 
 <button
+id="startCallBtn"
 class="start"
 onclick="startVoiceCall()">
-
 🎙️ ابدأ المكالمة
-
 </button>
 
 <button
 class="stop"
 onclick="stopVoiceCall()">
-
 ✕ إنهاء
-
 </button>
 
 </div>
 
 </div>
-
 </div>
-
 
 
 <script>
 
-const $=id=>document.getElementById(id);
-
 let character="sara";
-
 let pendingFile=null;
-
 let creativeFile=null;
 
-const API_BASE=
-"https://generativelanguage.googleapis.com/v1beta";
+let recognition=null;
+let callActive=false;
+let speaking=false;
+
+const $=id=>document.getElementById(id);
 
 
-/* CHARACTER */
+/* =========================
+   نماذج Gemini
+========================= */
+
+const CHAT_MODELS=[
+  "gemini-3.6-flash",
+  "gemini-3.5-flash",
+  "gemini-3.1-flash-lite",
+  "gemini-2.5-flash"
+];
+
+const IMAGE_MODEL="gemini-3.1-flash-image";
+
+
+/* =========================
+   الشخصيات
+========================= */
 
 function setCharacter(name){
 
@@ -857,22 +781,33 @@ character=name;
 
 $("saraBtn")
 .classList
-.toggle("active",name==="sara");
+.toggle(
+"active",
+name==="sara"
+);
 
 $("adyBtn")
 .classList
-.toggle("active",name==="ady");
+.toggle(
+"active",
+name==="ady"
+);
 
 $("voiceName").textContent=
-name==="sara"?"ساره":"عدي";
+name==="sara"
+?"ساره"
+:"عدي";
 
 $("voiceAvatar").textContent=
-name==="sara"?"👩🏻":"👨🏻";
-
+name==="sara"
+?"👩🏻"
+:"👨🏻";
 }
 
 
-/* NAVIGATION */
+/* =========================
+   التنقل
+========================= */
 
 function showHome(){
 
@@ -882,7 +817,6 @@ $("creator").style.display="none";
 
 }
 
-
 function showChat(){
 
 $("home").style.display="none";
@@ -890,7 +824,6 @@ $("chat").style.display="block";
 $("creator").style.display="none";
 
 }
-
 
 function showCreator(){
 
@@ -901,28 +834,35 @@ $("creator").style.display="block";
 }
 
 
-/* SETTINGS */
+/* =========================
+   إعدادات Gemini
+========================= */
 
 function openSettings(){
 
 $("apiKey").value=
-localStorage.getItem("studygpt_gemini_key")||"";
+localStorage.getItem(
+"studygpt_gemini_key"
+)||"";
 
-$("settings").classList.add("show");
+$("settings")
+.classList
+.add("show");
 
 }
-
 
 function closeSettings(){
 
-$("settings").classList.remove("show");
+$("settings")
+.classList
+.remove("show");
 
 }
 
-
 function saveKey(){
 
-const key=$("apiKey").value.trim();
+const key=
+$("apiKey").value.trim();
 
 if(!key){
 
@@ -944,22 +884,17 @@ closeSettings();
 }
 
 
-function getKey(){
-
-return localStorage.getItem(
-"studygpt_gemini_key"
-)||"";
-
-}
-
-
-/* FILE PICKER */
+/* =========================
+   اختيار الملفات
+========================= */
 
 function pickChatFile(){
 
-showChat();
+const el=$("chatFile");
 
-$("chatFile").click();
+el.value="";
+
+el.click();
 
 }
 
@@ -970,228 +905,242 @@ const file=input.files[0];
 
 if(!file)return;
 
-if(file.size>100*1024*1024){
+if(file.size>25*1024*1024){
 
-alert("حجم الملف أكبر من 100MB.");
+alert(
+"حاليًا الحد الأقصى للملف 25MB."
+);
 
 return;
 
 }
 
-pendingFile=file;
-
-renderAttachmentStatus(file);
-
-input.value="";
-
-}
-
-
-function renderAttachmentStatus(file){
-
-const url=
-URL.createObjectURL(file);
-
-let preview="📄";
-
-if(file.type.startsWith("image/")){
-
-preview=
-`<img src="${url}" alt="">`;
-
-}
-
-else if(file.type.startsWith("video/")){
-
-preview=
-`<video src="${url}" muted></video>`;
-
-}
-
-$("attachmentStatus").innerHTML=`
-
-<div class="attachment">
-
-${preview}
-
-<div class="name">
-${escapeHtml(file.name)}
-</div>
-
-<button
-class="remove"
-onclick="clearPendingFile()">
-
-إزالة
-
-</button>
-
-</div>
-
-`;
-
-}
-
-
-function clearPendingFile(){
-
-pendingFile=null;
-
-$("attachmentStatus").innerHTML="";
-
-}
-
-
-function escapeHtml(text){
-
-return String(text)
-.replace(/[&<>"']/g,function(m){
-
-return {
-
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#039;"
-
-}[m];
-
-});
-
-}
-
-
-/* CHAT */
-
-function addMessage(type,text){
-
-const div=
-document.createElement("div");
-
-div.className=
-"message "+type;
-
-div.textContent=text;
-
-$("messages").appendChild(div);
-
-div.scrollIntoView({
-behavior:"smooth",
-block:"end"
-});
-
-return div;
-
-}
-
-
-function sendHomeMessage(){
-
-const text=
-$("homePrompt").value.trim();
-
-if(!text)return;
-
-$("homePrompt").value="";
-
-showChat();
-
-addMessage("user",text);
-
-askGemini(text,null);
-
-}
-
-
-async function sendChat(){
-
-const text=
-$("chatInput").value.trim();
-
-if(!text&&!pendingFile)return;
-
-$("chatInput").value="";
-
-showChat();
-
-const file=pendingFile;
-
-let label=text;
-
-if(file){
-
-label=
-(text?text+"\n":"")+
-"📎 "+file.name;
-
-}
-
-addMessage("user",label);
-
-clearPendingFile();
-
-await askGemini(
-text||"حلل هذا الملف واشرحه لي.",
-file
-);
-
-}
-
-
-/* FILE DATA */
-
-function dataURL(file){
-
-return new Promise(
-(resolve,reject)=>{
-
 const reader=
 new FileReader();
 
-reader.onload=
-()=>resolve(reader.result);
+reader.onload=()=>{
 
-reader.onerror=
-reject;
+pendingFile={
+name:file.name,
+type:file.type,
+data:reader.result,
+size:file.size
+};
+
+$("attachmentStatus")
+.textContent=
+"📎 تم إرفاق: "+
+file.name;
+
+$("homeAttachment")
+.textContent=
+"📎 تم إرفاق: "+
+file.name;
+
+};
 
 reader.readAsDataURL(file);
-
-});
 
 }
 
 
 function dataParts(dataURL){
 
-const match=
+const m=
 dataURL.match(
 /^data:([^;]+);base64,(.*)$/s
 );
 
-if(!match){
-
+if(!m)
 throw new Error(
-"تعذر قراءة الملف."
+"تعذر قراءة الملف"
 );
 
-}
-
 return{
-
-mime:match[1],
-data:match[2]
-
+mime:m[1],
+data:m[2]
 };
 
 }
 
 
-/* GEMINI CHAT */
+/* =========================
+   إرسال الرسائل
+========================= */
 
-async function askGemini(text,file){
+function sendHomeMessage(){
 
-const key=getKey();
+const text=
+$("homePrompt")
+.value
+.trim();
+
+if(!text && !pendingFile)
+return;
+
+$("homePrompt").value="";
+
+showChat();
+
+sendChatCore(
+text ||
+"اشرح لي الملف المرفق"
+);
+
+}
+
+
+function sendChat(){
+
+const text=
+$("chatInput")
+.value
+.trim();
+
+if(!text && !pendingFile)
+return;
+
+$("chatInput").value="";
+
+sendChatCore(
+text ||
+"اشرح لي الملف المرفق"
+);
+
+}
+
+
+function sendChatCore(text){
+
+let display=text;
+
+if(pendingFile){
+
+display=
+"📎 "+
+pendingFile.name+
+"\n"+
+text;
+
+}
+
+addMessage(
+"user",
+display
+);
+
+const file=pendingFile;
+
+pendingFile=null;
+
+$("attachmentStatus")
+.textContent="";
+
+$("homeAttachment")
+.textContent="";
+
+askGemini(
+text,
+file
+);
+
+}
+
+
+function addMessage(
+type,
+text
+){
+
+const div=
+document.createElement("div");
+
+div.className=
+"message "+
+type;
+
+div.textContent=text;
+
+$("messages")
+.appendChild(div);
+
+window.scrollTo({
+top:document.body.scrollHeight,
+behavior:"smooth"
+});
+
+}
+
+
+/* =========================
+   معرفة نموذج Gemini المتاح
+========================= */
+
+async function getUsableChatModel(key){
+
+try{
+
+const r=
+await fetch(
+"https://generativelanguage.googleapis.com/v1beta/models?key="+
+encodeURIComponent(key)
+);
+
+if(r.ok){
+
+const d=
+await r.json();
+
+const available=
+(d.models||[])
+.filter(
+m=>
+(m.supportedGenerationMethods||[])
+.includes(
+"generateContent"
+)
+);
+
+for(
+const wanted of CHAT_MODELS
+){
+
+if(
+available.some(
+m=>
+m.name===
+"models/"+wanted
+)
+){
+
+return wanted;
+
+}
+
+}
+
+}
+
+}catch(e){}
+
+return "gemini-3.6-flash";
+
+}
+
+
+/* =========================
+   Gemini Chat
+========================= */
+
+async function askGemini(
+text,
+file
+){
+
+const key=
+localStorage.getItem(
+"studygpt_gemini_key"
+);
 
 if(!key){
 
@@ -1206,166 +1155,138 @@ character==="sara"
 ?"ساره"
 :"عدي";
 
-const ai=
 addMessage(
 "ai",
-"⏳ "+name+" يفكر..."
+"⏳ "+
+name+
+" يفكر..."
 );
 
+const aiMessages=
+document.querySelectorAll(
+".message.ai"
+);
+
+const bubble=
+aiMessages[
+aiMessages.length-1
+];
 
 try{
 
+const model=
+await getUsableChatModel(
+key
+);
+
 const parts=[
-
 {
-
 text:
-
 character==="sara"
 
 ?
 
-"أنت ساره، مساعدة دراسة لطيفة وذكية في StudyGPT. أجيبي بالعربية وبأسلوب واضح ومختصر."
+"أنت ساره، مساعدة دراسة لطيفة وذكية. أجيبي بالعربية وبطريقة سهلة وواضحة."
 
 :
 
-"أنت عدي، مساعد دراسة هادئ وذكي في StudyGPT. أجب بالعربية وبأسلوب واضح ومختصر."
-
-},
-
-{
-
-text:
-text||
-"حلل الملف المرفق واشرح أهم ما فيه."
-
+"أنت عدي، مساعد دراسة هادئ وذكي. أجب بالعربية وبطريقة سهلة وواضحة."
 }
-
 ];
 
+parts.push({
+text:text
+});
+
+
+/* ملف */
 
 if(file){
 
+const p=
+dataParts(
+file.data
+);
+
 if(
-file.type.startsWith("image/")
-){
-
-const p=
-dataParts(
-await dataURL(file)
-);
-
-parts.push({
-
-inlineData:{
-
-mimeType:p.mime,
-
-data:p.data
-
-}
-
-});
-
-}
-
-else if(
-file.type.startsWith("video/")
-){
-
-const p=
-dataParts(
-await dataURL(file)
-);
-
-parts.push({
-
-inlineData:{
-
-mimeType:p.mime,
-
-data:p.data
-
-}
-
-});
-
-}
-
-else if(
+file.type.startsWith("image/")||
+file.type.startsWith("video/")||
 file.type==="application/pdf"
 ){
 
-const p=
-dataParts(
-await dataURL(file)
-);
-
 parts.push({
 
 inlineData:{
-
 mimeType:p.mime,
-
 data:p.data
-
 }
 
 });
 
 }
 
-else if(
-file.type.startsWith("text/")||
-/\.(txt|md|csv)$/i.test(file.name)
-){
+else{
 
-const raw=
-await file.text();
+let raw="";
+
+try{
+
+raw=
+decodeURIComponent(
+escape(
+atob(p.data)
+)
+);
+
+}catch(e){
+
+try{
+raw=atob(p.data);
+}catch(x){}
+
+}
 
 parts.push({
-
 text:
 "محتوى الملف:\n"+
-raw.slice(0,200000)
-
+raw.slice(
+0,
+150000
+)
 });
 
 }
 
 }
 
+
+/* الطلب */
 
 const response=
 await fetch(
 
-API_BASE+
-"/models/gemini-2.5-flash:generateContent",
+"https://generativelanguage.googleapis.com/v1beta/models/"+
+model+
+":generateContent?key="+
+encodeURIComponent(key),
 
 {
 
 method:"POST",
 
 headers:{
-
 "Content-Type":
-"application/json",
-
-"x-goog-api-key":
-key
-
+"application/json"
 },
 
-body:JSON.stringify({
+body:
+JSON.stringify({
 
 contents:[
 
 {
-
 role:"user",
-
 parts:parts
-
 }
 
 ]
@@ -1380,121 +1301,96 @@ parts:parts
 const data=
 await response.json();
 
-
 if(!response.ok){
 
 throw new Error(
-
 data?.error?.message||
 "حدث خطأ في Gemini"
-
 );
 
 }
 
-
 const answer=
-data?.candidates?.[0]
+data
+?.candidates?.[0]
 ?.content?.parts
-?.map(x=>x.text||"")
+?.map(
+x=>x.text||""
+)
 .join("")
 ||
 "لم يصل رد.";
 
+bubble.textContent=
+answer;
 
-ai.textContent=answer;
+}catch(error){
 
-
-}
-
-catch(error){
-
-ai.textContent=
-"⚠️ "+error.message;
+bubble.textContent=
+"⚠️ "+
+error.message;
 
 }
 
 }
 
 
-/* CREATOR */
+/* =========================
+   صورة للتعديل
+========================= */
 
-function pickCreativeImage(){
+function creativeImageSelected(
+input
+){
 
-$("creativeImage").click();
-
-}
-
-
-function creativeImageSelected(input){
-
-const file=input.files[0];
+const file=
+input.files[0];
 
 if(!file)return;
 
-if(!file.type.startsWith("image/")){
+if(
+file.size>
+20*1024*1024
+){
 
-alert("اختاري صورة فقط.");
+alert(
+"الصورة أكبر من 20MB"
+);
 
 return;
 
 }
 
-creativeFile=file;
+const reader=
+new FileReader();
 
-input.value="";
+reader.onload=()=>{
 
-const url=
-URL.createObjectURL(file);
+creativeFile={
+type:file.type,
+data:reader.result,
+name:file.name
+};
 
-$("creativeAttachment").innerHTML=`
+};
 
-<div class="attachment">
-
-<img src="${url}">
-
-<div class="name">
-${escapeHtml(file.name)}
-</div>
-
-<button
-class="remove"
-onclick="
-creativeFile=null;
-$('creativeAttachment').innerHTML='';
-">
-
-إزالة
-
-</button>
-
-</div>
-
-`;
+reader.readAsDataURL(
+file
+);
 
 }
 
 
-function creatorTypeChanged(){
-
-const type=
-$("creatorType").value;
-
-$("creativeResult").textContent=
-type==="image"
-?
-"النتيجة ستظهر هنا"
-:
-"الفيديو قد يستغرق عدة دقائق.";
-
-}
-
-
-/* CREATE */
+/* =========================
+   إنشاء الصورة
+========================= */
 
 async function generateCreative(){
 
-const key=getKey();
+const key=
+localStorage.getItem(
+"studygpt_gemini_key"
+);
 
 if(!key){
 
@@ -1506,141 +1402,89 @@ return;
 
 const prompt=
 $("creativePrompt")
-.value.trim();
+.value
+.trim();
 
 if(!prompt){
 
-alert("اكتبي وصفًا أولًا.");
+alert(
+"اكتبي وصفًا للصورة"
+);
 
 return;
 
 }
 
-const type=
-$("creatorType").value;
-
 const result=
 $("creativeResult");
 
 result.innerHTML=
-"⏳ جاري الإنشاء...";
-
+"🖼️ جاري إنشاء الصورة...";
 
 try{
 
-if(type==="image"){
-
-await generateImage(
-prompt,
-key,
-result
-);
-
-}
-
-else{
-
-await generateVideo(
-prompt,
-key,
-result
-);
-
-}
-
-}
-
-catch(error){
-
-result.textContent=
-"⚠️ "+error.message;
-
-}
-
-}
+let input=[];
 
 
-/* IMAGE GENERATION */
-
-async function generateImage(
-prompt,
-key,
-result
-){
-
-const parts=[
-
-{
-
-text:
-"Create a high quality image based on this request: "+
-prompt
-
-}
-
-];
-
+/* الصورة المرفقة */
 
 if(creativeFile){
 
 const p=
 dataParts(
-await dataURL(creativeFile)
+creativeFile.data
 );
 
-parts.push({
+input.push({
 
-inlineData:{
-
-mimeType:p.mime,
-
-data:p.data
-
-}
+type:"image",
+data:p.data,
+mime_type:p.mime
 
 });
 
 }
 
 
+/* الوصف */
+
+input.push({
+
+type:"text",
+text:prompt
+
+});
+
+
 const response=
 await fetch(
 
-API_BASE+
-"/models/gemini-2.5-flash-image:generateContent",
+"https://generativelanguage.googleapis.com/v1beta/interactions",
 
 {
 
 method:"POST",
 
 headers:{
-
 "Content-Type":
 "application/json",
 
 "x-goog-api-key":
 key
-
 },
 
-body:JSON.stringify({
+body:
+JSON.stringify({
 
-contents:[
+model:IMAGE_MODEL,
 
-{
+input:input,
 
-parts:parts
-
-}
-
-],
-
-generationConfig:{
-
-responseModalities:[
-"IMAGE"
-]
-
+response_format:{
+type:"image",
+aspect_ratio:
+$("aspect").value,
+image_size:"1K"
 }
 
 })
@@ -1653,264 +1497,99 @@ responseModalities:[
 const data=
 await response.json();
 
-
 if(!response.ok){
 
 throw new Error(
-
 data?.error?.message||
-"فشل إنشاء الصورة."
-
+"فشل إنشاء الصورة"
 );
 
 }
 
 
-const image=
-data?.candidates?.[0]
-?.content?.parts
-?.find(x=>x.inlineData);
+/* استخراج الصورة */
+
+let img=null;
+
+for(
+const step of
+(data.steps||[])
+){
+
+for(
+const block of
+(step.content||[])
+){
+
+if(
+block.type==="image"
+){
+
+img=block;
+
+break;
+
+}
+
+}
+
+if(img)break;
+
+}
 
 
-if(!image){
+if(!img){
 
-throw new Error(
-"لم يرجع النموذج صورة. تأكدي من صلاحية نموذج الصور."
-);
+result.innerHTML=
+"⚠️ لم يرجع Gemini صورة. تأكدي أن مفتاحك يملك صلاحية نموذج الصور.";
+
+return;
 
 }
 
 
 const src=
 "data:"+
-image.inlineData.mimeType+
+(
+img.mime_type||
+"image/png"
+)+
 ";base64,"+
-image.inlineData.data;
-
-
-result.innerHTML=`
-
-<img
-src="${src}"
-alt="StudyGPT">
-
-<br><br>
-
-<a
-class="generate"
-style="display:inline-block;text-decoration:none"
-download="studygpt-image.png"
-href="${src}">
-
-⬇️ حفظ الصورة
-
-</a>
-
-`;
-
-}
-
-
-/* VIDEO */
-
-async function generateVideo(
-prompt,
-key,
-result
-){
-
-const response=
-await fetch(
-
-API_BASE+
-"/models/veo-3.1-generate-preview:predictLongRunning",
-
-{
-
-method:"POST",
-
-headers:{
-
-"Content-Type":
-"application/json",
-
-"x-goog-api-key":
-key
-
-},
-
-body:JSON.stringify({
-
-instances:[
-
-{
-
-prompt:prompt
-
-}
-
-],
-
-parameters:{
-
-aspectRatio:
-$("aspect").value
-
-}
-
-})
-
-}
-
-);
-
-
-const operation=
-await response.json();
-
-
-if(!response.ok){
-
-throw new Error(
-
-operation?.error?.message||
-"فشل بدء إنشاء الفيديو. قد لا يكون Veo متاحًا لمفتاحك."
-
-);
-
-}
-
-
-if(!operation.name){
-
-throw new Error(
-"لم يرجع Gemini عملية إنشاء الفيديو."
-);
-
-}
-
-
-for(let i=0;i<90;i++){
-
-await new Promise(
-resolve=>setTimeout(resolve,5000)
-);
-
-
-const statusResponse=
-await fetch(
-
-API_BASE+
-"/"+operation.name,
-
-{
-
-headers:{
-
-"x-goog-api-key":
-key
-
-}
-
-}
-
-);
-
-
-const status=
-await statusResponse.json();
-
-
-if(status.error){
-
-throw new Error(
-status.error.message
-);
-
-}
+img.data;
 
 
 result.innerHTML=
-"🎬 جاري إنشاء الفيديو... "+
-Math.round((i+1)/90*100)+
-"%";
+'<img src="'+
+src+
+'" alt="StudyGPT generated image">'+
+'<br><br>'+
+'<a class="generate" download="studygpt-image.png" href="'+
+src+
+'">⬇️ حفظ الصورة</a>';
 
 
-if(status.done){
+}catch(e){
 
-const uri=
-status
-?.response
-?.generateVideoResponse
-?.generatedSamples
-?.[0]
-?.video
-?.uri;
-
-
-if(!uri){
-
-throw new Error(
-"لم يتم إرجاع الفيديو."
-);
-
-}
-
-
-const videoUrl=
-uri+
-(uri.includes("?")?"&":"?")+
-"key="+
-encodeURIComponent(key);
-
-
-result.innerHTML=`
-
-<video
-controls
-playsinline
-src="${videoUrl}">
-</video>
-
-<br><br>
-
-<a
-class="generate"
-style="display:inline-block;text-decoration:none"
-href="${videoUrl}"
-download="studygpt-video.mp4">
-
-⬇️ حفظ الفيديو
-
-</a>
-
-`;
-
-return;
+result.innerHTML=
+"⚠️ "+
+e.message;
 
 }
 
 }
 
-throw new Error(
-"استغرق إنشاء الفيديو وقتًا طويلًا."
-);
 
-}
-
-
-/* VOICE */
-
-let recognition=null;
-
-let callActive=false;
-
-let speaking=false;
-
+/* =========================
+   المكالمة الصوتية
+========================= */
 
 function openVoiceCall(){
 
-if(!getKey()){
+if(
+!localStorage.getItem(
+"studygpt_gemini_key"
+)
+){
 
 openSettings();
 
@@ -1924,10 +1603,12 @@ $("voiceCall")
 
 setCharacter(character);
 
-$("voiceStatus").textContent=
+$("voiceStatus")
+.textContent=
 "اضغطي «ابدأ المكالمة» وتكلمي";
 
-$("transcript").textContent=
+$("transcript")
+.textContent=
 "أنا أسمعك وأرد عليك صوتيًا 🎙️";
 
 }
@@ -1942,11 +1623,8 @@ speaking=false;
 if(recognition){
 
 try{
-
 recognition.abort();
-
-}
-catch(e){}
+}catch(e){}
 
 recognition=null;
 
@@ -1958,11 +1636,8 @@ in window
 ){
 
 try{
-
 speechSynthesis.cancel();
-
-}
-catch(e){}
+}catch(e){}
 
 }
 
@@ -1977,17 +1652,21 @@ $("voiceCall")
 }
 
 
+/* =========================
+   بدء المكالمة
+========================= */
+
 async function startVoiceCall(){
 
-const SpeechRecognition=
+const SR=
 window.SpeechRecognition||
 window.webkitSpeechRecognition;
 
+if(!SR){
 
-if(!SpeechRecognition){
-
-$("voiceStatus").textContent=
-"المتصفح لا يدعم التعرف على الصوت. جربي Chrome.";
+$("voiceStatus")
+.textContent=
+"المتصفح لا يدعم التعرف على الصوت. استخدمي Chrome على HTTPS.";
 
 return;
 
@@ -1995,6 +1674,11 @@ return;
 
 
 try{
+
+if(
+navigator.mediaDevices
+?.getUserMedia
+){
 
 await navigator
 .mediaDevices
@@ -2004,15 +1688,25 @@ audio:true
 
 }
 
-catch(e){
+}catch(e){
 
-$("voiceStatus").textContent=
-"يرجى السماح بصلاحية الميكروفون.";
+$("voiceStatus")
+.textContent=
+"يرجى السماح بصلاحية الميكروفون من إعدادات المتصفح.";
 
 return;
 
 }
 
+
+if(
+"speechSynthesis"
+in window
+){
+
+speechSynthesis.resume();
+
+}
 
 callActive=true;
 
@@ -2021,41 +1715,58 @@ listen();
 }
 
 
+/* =========================
+   الاستماع
+========================= */
+
 function listen(){
 
-if(!callActive||speaking)return;
+if(
+!callActive||
+speaking
+)
+return;
 
-
-const SpeechRecognition=
+const SR=
 window.SpeechRecognition||
 window.webkitSpeechRecognition;
 
+try{
 
 recognition=
-new SpeechRecognition();
+new SR();
 
+}catch(e){
+
+return;
+
+}
 
 recognition.lang=
 "ar-SA";
 
-recognition.continuous=false;
+recognition.continuous=
+false;
 
-recognition.interimResults=false;
+recognition.interimResults=
+false;
 
-
-$("voiceStatus").textContent=
+$("voiceStatus")
+.textContent=
 "🎙️ أسمعك... تكلمي الآن";
 
 
 recognition.onresult=
-event=>{
+e=>{
 
 const text=
-event.results[0][0]
+e.results[0][0]
 .transcript;
 
-$("transcript").textContent=
-"أنتِ: "+text;
+$("transcript")
+.textContent=
+"أنتِ: "+
+text;
 
 voiceAsk(text);
 
@@ -2063,11 +1774,23 @@ voiceAsk(text);
 
 
 recognition.onerror=
-event=>{
+e=>{
 
-if(callActive&&!speaking){
+if(
+callActive &&
+!speaking
+){
 
-$("voiceStatus").textContent=
+$("voiceStatus")
+.textContent=
+e.error==="not-allowed"
+
+?
+
+"تأكدي من إذن الميكروفون."
+
+:
+
 "لم أسمعك جيدًا، حاولي مرة أخرى.";
 
 }
@@ -2075,12 +1798,27 @@ $("voiceStatus").textContent=
 };
 
 
-recognition.onend=()=>{
+recognition.onend=
+()=>{
 
-if(callActive&&!speaking){
+if(
+callActive &&
+!speaking
+){
 
 setTimeout(
-listen,
+()=>{
+
+if(
+callActive &&
+!speaking
+){
+
+listen();
+
+}
+
+},
 500
 );
 
@@ -2093,84 +1831,86 @@ try{
 
 recognition.start();
 
-}
-catch(e){}
+}catch(e){}
 
 }
 
 
-/* VOICE GEMINI */
+/* =========================
+   رد المكالمة
+========================= */
 
 async function voiceAsk(text){
 
-const key=getKey();
+const key=
+localStorage.getItem(
+"studygpt_gemini_key"
+);
 
 const name=
 character==="sara"
 ?"ساره"
 :"عدي";
 
-
-$("voiceStatus").textContent=
-"⏳ "+name+" يفكر...";
+$("voiceStatus")
+.textContent=
+"⏳ "+
+name+
+" يفكر...";
 
 
 try{
+
+const model=
+await getUsableChatModel(
+key
+);
 
 const system=
 character==="sara"
 
 ?
 
-"أنت ساره، مساعدة صوتية لطيفة. تحدثي بالعربية السعودية بشكل طبيعي واجعلي ردك قصيرًا."
+"أنت ساره، مساعدة صوتية أنثى. تحدثي بالعربية السعودية بشكل طبيعي ولطيف، واجعلي ردك قصيرًا كأنه مكالمة."
 
 :
 
-"أنت عدي، مساعد صوتي هادئ. تحدث بالعربية السعودية بشكل طبيعي واجعل ردك قصيرًا.";
+"أنت عدي، مساعد صوتي ذكر. تحدث بالعربية السعودية بشكل طبيعي وهادئ، واجعل ردك قصيرًا كأنه مكالمة.";
 
 
-const response=
+const r=
 await fetch(
 
-API_BASE+
-"/models/gemini-2.5-flash:generateContent",
+"https://generativelanguage.googleapis.com/v1beta/models/"+
+model+
+":generateContent?key="+
+encodeURIComponent(key),
 
 {
 
 method:"POST",
 
 headers:{
-
 "Content-Type":
-"application/json",
-
-"x-goog-api-key":
-key
-
+"application/json"
 },
 
-body:JSON.stringify({
+body:
+JSON.stringify({
 
 systemInstruction:{
-
 parts:[
 {text:system}
 ]
-
 },
 
 contents:[
-
 {
-
 role:"user",
-
 parts:[
 {text:text}
 ]
-
 }
-
 ]
 
 })
@@ -2180,14 +1920,13 @@ parts:[
 );
 
 
-const data=
-await response.json();
+const d=
+await r.json();
 
-
-if(!response.ok){
+if(!r.ok){
 
 throw new Error(
-data?.error?.message||
+d?.error?.message||
 "خطأ في Gemini"
 );
 
@@ -2195,83 +1934,94 @@ data?.error?.message||
 
 
 const answer=
-data?.candidates?.[0]
+d
+?.candidates?.[0]
 ?.content?.parts
-?.map(x=>x.text||"")
+?.map(
+x=>x.text||""
+)
 .join("")
 ||
 "ما قدرت أرد الآن.";
 
 
-$("transcript").textContent=
-name+": "+answer;
-
+$("transcript")
+.textContent=
+name+
+": "+
+answer;
 
 speak(answer);
 
 
-}
+}catch(e){
 
-catch(error){
-
-$("voiceStatus").textContent=
-"⚠️ "+error.message;
-
-}
+$("voiceStatus")
+.textContent=
+"⚠️ "+
+e.message;
 
 }
 
+}
 
-/* SPEECH */
+
+/* =========================
+   الصوت
+========================= */
 
 function speak(text){
 
 if(
 !callActive||
-!("speechSynthesis"in window)
-)return;
-
+!(
+"speechSynthesis"
+in window
+)
+)
+return;
 
 try{
-
 speechSynthesis.cancel();
-
-}
-catch(e){}
+}catch(e){}
 
 
-const utterance=
+const u=
 new SpeechSynthesisUtterance(
-text.replace(/[*_#`]/g,"")
+text.replace(
+/[*_#`]/g,
+""
+)
 );
 
-
-utterance.lang=
+u.lang=
 "ar-SA";
 
-utterance.rate=.95;
+u.rate=.95;
 
-utterance.pitch=
+u.pitch=
 character==="sara"
 ?1.1
 :.85;
 
-
 speaking=true;
-
 
 $("voiceAvatar")
 .classList
 .add("speaking");
 
-
-$("voiceStatus").textContent=
+$("voiceStatus")
+.textContent=
 "🔊 "+
-(character==="sara"?"ساره":"عدي")+
+(
+character==="sara"
+?"ساره"
+:"عدي"
+)+
 " يتكلم...";
 
 
-utterance.onend=()=>{
+u.onend=()=>{
 
 speaking=false;
 
@@ -2279,11 +2029,11 @@ $("voiceAvatar")
 .classList
 .remove("speaking");
 
-
 if(callActive){
 
-$("voiceStatus").textContent=
-"🎙️ دورك... أسمعك الآن";
+$("voiceStatus")
+.textContent=
+"🎙️ دورك...";
 
 setTimeout(
 listen,
@@ -2295,7 +2045,7 @@ listen,
 };
 
 
-utterance.onerror=()=>{
+u.onerror=()=>{
 
 speaking=false;
 
@@ -2303,35 +2053,32 @@ $("voiceAvatar")
 .classList
 .remove("speaking");
 
-if(callActive){
-
+if(callActive)
 listen();
-
-}
 
 };
 
 
-speechSynthesis.speak(
-utterance
-);
+speechSynthesis.speak(u);
 
 }
 
 
-/* ENTER */
+/* =========================
+   Enter
+========================= */
 
 $("chatInput")
 .addEventListener(
 "keydown",
-event=>{
+e=>{
 
 if(
-event.key==="Enter"&&
-!event.shiftKey
+e.key==="Enter" &&
+!e.shiftKey
 ){
 
-event.preventDefault();
+e.preventDefault();
 
 sendChat();
 
@@ -2343,14 +2090,14 @@ sendChat();
 $("homePrompt")
 .addEventListener(
 "keydown",
-event=>{
+e=>{
 
 if(
-event.key==="Enter"&&
-!event.shiftKey
+e.key==="Enter" &&
+!e.shiftKey
 ){
 
-event.preventDefault();
+e.preventDefault();
 
 sendHomeMessage();
 
