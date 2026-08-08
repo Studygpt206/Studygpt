@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>StudyGPT</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Tahoma,sans-serif;background:#0d0b14;color:#fff}
+button,input,textarea,select{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:flex}
+.sidebar{width:250px;background:#15121f;border-left:1px solid #29233a;padding:20px}.logo{font-size:25px;font-weight:800;margin-bottom:30px}.logo span{color:#8b6cff}
+.nav{display:flex;flex-direction:column;gap:10px}.nav button{background:#211c2d;color:#fff;border:0;padding:14px;border-radius:14px;text-align:right}.nav button:hover{background:#302743}
+.main{flex:1;min-width:0}.top{height:70px;border-bottom:1px solid #29233a;display:flex;align-items:center;justify-content:space-between;padding:0 25px}
+.character{display:flex;gap:10px}.character button{border:1px solid #39304e;background:#1b1727;color:#fff;border-radius:20px;padding:9px 15px}.character button.active{background:#7657ff;border-color:#7657ff}
+.page{max-width:1000px;margin:auto;padding:35px 20px}.hero{text-align:center;padding:45px 10px}.hero h1{font-size:42px;margin:10px 0}.hero h1 span{color:#8b6cff}.hero p{color:#aaa3bd}
+.chat{display:none}.messages{min-height:55vh;padding:10px}.message{max-width:80%;margin:12px 0;padding:14px 17px;border-radius:18px;line-height:1.8;white-space:pre-wrap}.user{background:#6e50e8;margin-right:auto}.ai{background:#211d2c;margin-left:auto}
+.composer{position:sticky;bottom:0;background:#0d0b14;padding:15px 0}.box{display:flex;gap:10px;background:#191521;border:1px solid #352c48;border-radius:20px;padding:10px}
+textarea{flex:1;resize:none;min-height:55px;background:transparent;color:#fff;border:0;outline:0;padding:10px}.send{width:55px;border:0;border-radius:15px;background:#7657ff;color:white}
+.tools{display:flex;gap:8px;margin-top:10px}.tool{background:#211c2d;color:#fff;border:0;border-radius:12px;padding:9px 13px}
+.creator{display:none}.creator-card{background:#171420;border:1px solid #30283e;border-radius:22px;padding:22px}
+.creator textarea,.creator input,.creator select{width:100%;background:#0e0c14;color:#fff;border:1px solid #352d45;border-radius:13px;padding:12px;margin:7px 0}
+.generate{width:100%;border:0;border-radius:14px;padding:14px;background:#7657ff;color:#fff;font-weight:bold;margin-top:10px}.result{margin-top:20px;min-height:100px;border-radius:18px;background:#0e0c14;padding:20px;text-align:center}.result img,.result video{max-width:100%;border-radius:15px}
+.modal{display:none;position:fixed;inset:0;background:#000b;z-index:1000;align-items:center;justify-content:center;padding:20px}.modal.show{display:flex}.modal-card{width:min(500px,100%);background:#181521;border:1px solid #39304b;border-radius:22px;padding:25px}.modal-card input{width:100%;padding:14px;background:#0d0b14;color:#fff;border:1px solid #3b334d;border-radius:12px;margin:10px 0}
+.voice-call{display:none;position:fixed;inset:0;z-index:2000;background:rgba(7,6,12,.96);align-items:center;justify-content:center;padding:20px}.voice-call.show{display:flex}
+.voice-card{width:min(520px,95vw);text-align:center;background:#171420;border:1px solid #6548d8;border-radius:30px;padding:30px}.avatar{width:120px;height:120px;margin:auto;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:60px;background:linear-gradient(135deg,#7051ff,#bd75ff);transition:transform .3s}.avatar.speaking{transform:scale(1.1);box-shadow:0 0 20px #8b6cff}.voice-name{font-size:28px;font-weight:bold;margin-top:15px}.voice-status{color:#aaa3bd;margin:10px}.transcript{background:#0e0c14;border-radius:16px;padding:15px;min-height:80px;margin:20px 0;line-height:1.8}.voice-buttons{display:flex;gap:10px;justify-content:center}.voice-buttons button{border:0;border-radius:15px;padding:14px 20px;color:#fff}.start{background:#7657ff}.stop{background:#332c42}
+@media(max-width:700px){.sidebar{display:none}.hero h1{font-size:32px}.message{max-width:90%}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+<div class="logo">Study<span>GPT</span> ✦</div>
+<div class="nav">
+<button onclick="showHome()">🏠 الرئيسية</button>
+<button onclick="showChat()">💬 المحادثة</button>
+<button onclick="showCreator()">🎨 إنشاء الصور والفيديو</button>
+<button onclick="openVoiceCall()">📞 مكالمة مباشرة</button>
+<button onclick="openSettings()">⚙️ إعدادات Gemini</button>
+</div>
+</aside>
+<main class="main">
+<header class="top"><strong>StudyGPT</strong><div class="character">
+<button id="saraBtn" class="active" onclick="setCharacter('sara')">👩🏻 ساره</button>
+<button id="adyBtn" onclick="setCharacter('ady')">👨🏻 عدي</button>
+</div></header>
+
+<section id="home" class="page">
+<div class="hero"><div style="font-size:50px">✦</div>
+<h1>مرحبًا بك في <span>StudyGPT</span></h1>
+<p>مساعدك الذكي للدراسة والمحادثة وإنشاء الصور والفيديوهات.</p>
+<div class="box" style="margin-top:30px"><textarea id="homePrompt" placeholder="اسألي ساره أو عدي أي شيء..."></textarea><button class="send" onclick="sendHomeMessage()">➤</button></div>
+<div class="tools"><button class="tool" onclick="$('fileInput').click()">📎 ملف أو صورة</button><button class="tool" onclick="showCreator()">🎨 إنشاء</button><button class="tool" onclick="openVoiceCall()">📞 تحدثي معي</button></div>
+<input id="fileInput" type="file" accept="image/*,.pdf,.txt,.md,.csv" style="display:none" onchange="fileSelected(this)">
+</div></section>
+
+<section id="chat" class="page chat"><div id="messages" class="messages"></div>
+<div id="attachmentStatus" style="color:#aaa3bd;margin-bottom:8px"></div>
+<div class="composer"><div class="box"><textarea id="chatInput" placeholder="اكتبي رسالتك..."></textarea><button class="send" onclick="sendChat()">➤</button></div>
+<div class="tools"><button class="tool" onclick="$('chatFile').click()">📎 إرفاق</button><button class="tool" onclick="openVoiceCall()">📞 مكالمة</button></div>
+<input id="chatFile" type="file" accept="image/*,.pdf,.txt,.md,.csv" style="display:none" onchange="fileSelected(this)"></div></section>
+
+<section id="creator" class="page creator"><div class="creator-card">
+<h2>🎨 إنشاء بالذكاء الاصطناعي</h2><p style="color:#aaa3bd">أنشئي صورة أو فيديو باستخدام وصفك.</p>
+<select id="creatorType"><option value="image">🖼️ إنشاء صورة</option><option value="video">🎬 إنشاء فيديو</option></select>
+<textarea id="creativePrompt" rows="5" placeholder="مثال: فتاة تدرس في مكتبة جامعية مستقبلية..."></textarea>
+<select id="aspect"><option value="16:9">أفقي 16:9</option><option value="9:16">عمودي 9:16</option><option value="1:1">مربع 1:1</option></select>
+<button class="tool" onclick="$('creativeImage').click()">📷 أرفقي صورة لتعديلها</button>
+<input id="creativeImage" type="file" accept="image/*" style="display:none" onchange="creativeImageSelected(this)">
+<button class="generate" onclick="generateCreative()">✨ إنشاء الآن</button>
+<div id="creativeResult" class="result">النتيجة ستظهر هنا</div>
+</div></section>
+</main></div>
+
+<div id="settings" class="modal"><div class="modal-card"><h2>⚙️ إعدادات Gemini</h2><p style="color:#aaa3bd">ضعي مفتاح Gemini API الخاص بك هنا.</p>
+<input id="apiKey" type="password" placeholder="Gemini API Key"><button class="generate" onclick="saveKey()">💾 حفظ المفتاح</button>
+<button class="tool" style="width:100%;margin-top:10px" onclick="closeSettings()">إغلاق</button></div></div>
+
+<div id="voiceCall" class="voice-call"><div class="voice-card">
+<div id="voiceAvatar" class="avatar">👩🏻</div><div id="voiceName" class="voice-name">ساره</div>
+<div id="voiceStatus" class="voice-status">اضغطي ابدأ وتكلمي</div><div id="transcript" class="transcript">المحادثة الصوتية ستظهر هنا...</div>
+<div class="voice-buttons"><button id="startCallBtn" class="start" onclick="startVoiceCall()">🎙️ ابدأ المكالمة</button><button class="stop" onclick="stopVoiceCall()">✕ إنهاء</button></div>
+</div></div>
+
+<script>
+let character="sara",pendingFile=null,creativeFile=null,recognition=null,callActive=false,speaking=false;
+const $=id=>document.getElementById(id);
+function setCharacter(name){character=name;$("saraBtn").classList.toggle("active",name==="sara");$("adyBtn").classList.toggle("active",name==="ady");$("voiceName").textContent=name==="sara"?"ساره":"عدي";$("voiceAvatar").textContent=name==="sara"?"👩🏻":"👨🏻"}
+function showHome(){$("home").style.display="block";$("chat").style.display="none";$("creator").style.display="none"}
+function showChat(){$("home").style.display="none";$("chat").style.display="block";$("creator").style.display="none"}
+function showCreator(){$("home").style.display="none";$("chat").style.display="none";$("creator").style.display="block"}
+function openSettings(){$("apiKey").value=localStorage.getItem("studygpt_gemini_key")||"";$("settings").classList.add("show")}
+function closeSettings(){$("settings").classList.remove("show")}
+function saveKey(){let key=$("apiKey").value.trim();if(!key){alert("ضعي مفتاح Gemini أولًا");return}localStorage.setItem("studygpt_gemini_key",key);alert("تم حفظ مفتاح Gemini ✅");closeSettings()}
+function fileSelected(input){let file=input.files[0];if(!file)return;if(file.size>20*1024*1024){alert("حجم الملف أكبر من 20MB");return}let reader=new FileReader();reader.onload=()=>{pendingFile={name:file.name,type:file.type,data:reader.result};$("attachmentStatus").textContent="📎 تم إرفاق: "+file.name};reader.readAsDataURL(file)}
+function dataParts(dataURL){let m=dataURL.match(/^data:([^;]+);base64,(.*)$/s);return m?{mime:m[1],data:m[2]}:null}
+function sendHomeMessage(){let text=$("homePrompt").value.trim();if(!text)return;$("homePrompt").value="";showChat();addMessage("user",text);askGemini(text,null)}
+function sendChat(){let text=$("chatInput").value.trim();if(!text&&!pendingFile)return;$("chatInput").value="";showChat();let message=text;if(pendingFile)message="📎 "+pendingFile.name+"\n"+(text||"اشرح لي هذا الملف");addMessage("user",message);let file=pendingFile;pendingFile=null;$("attachmentStatus").textContent="";askGemini(text||"اشرح لي هذا الملف",file)}
+function addMessage(type,text){let div=document.createElement("div");div.className="message "+type;div.textContent=text;$("messages").appendChild(div);window.scrollTo({top:document.body.scrollHeight,behavior:"smooth"})}
+async function askGemini(text,file){
+let key=localStorage.getItem("studygpt_gemini_key");if(!key){openSettings();return}
+let name=character==="sara"?"ساره":"عدي";addMessage("ai","⏳ "+name+" يفكر...");
+try{
+let parts=[{text:character==="sara"?"أنت ساره، مساعدة دراسة أنثى في StudyGPT. كوني لطيفة وذكية واشرحي بطريقة سهلة. أجيبي بالعربية.":"أنت عدي، مساعد دراسة ذكر في StudyGPT. كن هادئًا وذكيًا واشرح بطريقة سهلة. أجب بالعربية."},{text:text}];
+if(file){let p=dataParts(file.data);if(p&&(file.type.startsWith("image/")||file.type==="application/pdf"))parts.push({inlineData:{mimeType:p.mime,data:p.data}});else if(p){try{let raw=atob(p.data);parts.push({text:"محتوى الملف:\n"+raw.slice(0,150000)})}catch(e){}}}
+let response=await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",{method:"POST",headers:{"Content-Type":"application/json","x-goog-api-key":key},body:JSON.stringify({contents:[{role:"user",parts}]})});
+let data=await response.json();if(!response.ok)throw new Error(data?.error?.message||"حدث خطأ في Gemini");
+let answer=data?.candidates?.[0]?.content?.parts?.map(x=>x.text||"").join("")||"لم يصل رد.";
+let msgs=document.querySelectorAll(".message.ai");if(msgs.length)msgs[msgs.length-1].textContent=answer;
+}catch(error){let msgs=document.querySelectorAll(".message.ai");if(msgs.length)msgs[msgs.length-1].textContent="⚠️ "+error.message}
+}
+function creativeImageSelected(input){let file=input.files[0];if(!file)return;let reader=new FileReader();reader.onload=()=>{creativeFile={type:file.type,data:reader.result}};reader.readAsDataURL(file)}
+async function generateCreative(){
+let key=localStorage.getItem("studygpt_gemini_key");if(!key){openSettings();return}
+let prompt=$("creativePrompt").value.trim();if(!prompt){alert("اكتبي وصفًا للصورة أو الفيديو");return}
+let result=$("creativeResult"),type=$("creatorType").value;if(type==="video"){result.innerHTML="🎬 توليد الفيديو يحتاج خدمة/نموذج فيديو متاح في حساب Gemini الخاص بك. هذا الإصدار لا ينشئ فيديو محليًا.";return}
+result.innerHTML="🖼️ جاري إنشاء الصورة...";
+try{
+let parts=[{text:"Create a high quality image based on this request: "+prompt}];
+if(creativeFile){let p=dataParts(creativeFile.data);if(p)parts.push({inlineData:{mimeType:p.mime,data:p.data}})}
+let response=await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent",{method:"POST",headers:{"Content-Type":"application/json","x-goog-api-key":key},body:JSON.stringify({contents:[{parts}]})});
+let data=await response.json();if(!response.ok)throw new Error(data?.error?.message||"فشل إنشاء الصورة");
+let image=data?.candidates?.[0]?.content?.parts?.find(x=>x.inlineData);
+if(image){let src="data:"+image.inlineData.mimeType+";base64,"+image.inlineData.data;result.innerHTML='<img src="'+src+'"><br><br><a class="generate" download="studygpt-image.png" href="'+src+'">⬇️ حفظ الصورة</a>'}
+else result.innerHTML="لم يرجع Gemini صورة. تأكدي من أن النموذج المتاح في مفتاحك يدعم توليد الصور.";
+}catch(e){result.innerHTML="⚠️ "+e.message}
+}
+function openVoiceCall(){if(!localStorage.getItem("studygpt_gemini_key")){openSettings();return}$("voiceCall").classList.add("show");setCharacter(character);$("voiceStatus").textContent="اضغطي «ابدأ المكالمة» وتكلمي";$("transcript").textContent="أنا أسمعك وأرد عليك صوتيًا 🎙️"}
+function stopVoiceCall(){callActive=false;speaking=false;if(recognition){try{recognition.abort()}catch(e){}recognition=null}if("speechSynthesis"in window)try{speechSynthesis.cancel()}catch(e){}$("voiceAvatar").classList.remove("speaking");$("voiceCall").classList.remove("show")}
+async function startVoiceCall(){
+let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+
+if(!SR){
+  $("voiceStatus").textContent="المتصفح لا يدعم التعرف على الصوت. جربي Chrome أو افتحي الموقع من https.";
+  return;
+}
+
+/* لا نطلب getUserMedia هنا؛ SpeechRecognition نفسه يطلب إذن الميكروفون.
+   طلب getUserMedia أولاً كان يسبب ظهور رسالة السماح حتى بعد تفعيل الإذن،
+   خصوصًا عند فتح ملف HTML محليًا من content:// أو file://. */
+
+if("speechSynthesis" in window){
+  try{speechSynthesis.resume()}catch(e){}
+}
+
+callActive=true;
+$("voiceStatus").textContent="🎙️ جاري تشغيل الميكروفون...";
+listen();
+}
+function listen(){if(!callActive||speaking)return;let SR=window.SpeechRecognition||window.webkitSpeechRecognition;try{recognition=new SR()}catch(e){$("voiceStatus").textContent="خطأ في تهيئة التعرف على الصوت.";return}
+recognition.lang="ar-SA";recognition.continuous=false;recognition.interimResults=false;$("voiceStatus").textContent="🎙️ أسمعك... تكلمي الآن";
+recognition.onresult=e=>{let text=e.results[0][0].transcript;$("transcript").textContent="أنتِ: "+text;voiceAsk(text)}
+recognition.onerror=e=>{
+  if(!callActive || speaking) return;
+
+  if(e.error==="not-allowed" || e.error==="service-not-allowed"){
+    $("voiceStatus").textContent="⚠️ الميكروفون مفعّل، لكن المتصفح يمنع التعرف الصوتي لهذا الملف. افتحي StudyGPT من رابط https أو اسمحي للميكروفون للموقع.";
+  }else if(e.error==="audio-capture"){
+    $("voiceStatus").textContent="⚠️ لم أستطع الوصول للميكروفون. تأكدي أنه غير مستخدم في تطبيق آخر.";
+  }else{
+    $("voiceStatus").textContent="لم أسمعك جيدًا، اضغطي «ابدأ المكالمة» وحاولي مرة أخرى 🎙️";
+  }
+}
+recognition.onend=()=>{if(callActive&&!speaking)setTimeout(()=>{if(callActive&&!speaking)listen()},500)}
+try{recognition.start()}catch(e){}
+}
+async function voiceAsk(text){
+let key=localStorage.getItem("studygpt_gemini_key"),name=character==="sara"?"ساره":"عدي";$("voiceStatus").textContent="⏳ "+name+" يفكر...";
+try{
+let system=character==="sara"?"أنت ساره، مساعدة صوتية أنثى. تحدثي بالعربية السعودية بشكل طبيعي ولطيف. اجعلي ردك قصيرًا وطبيعيًا كأنها مكالمة هاتفية.":"أنت عدي، مساعد صوتي ذكر. تحدث بالعربية السعودية بشكل طبيعي وهادئ. اجعل ردك قصيرًا وطبيعيًا كأنها مكالمة هاتفية.";
+let response=await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent",{method:"POST",headers:{"Content-Type":"application/json","x-goog-api-key":key},body:JSON.stringify({systemInstruction:{parts:[{text:system}]},contents:[{role:"user",parts:[{text}]}]})});
+let data=await response.json();if(!response.ok)throw new Error(data?.error?.message||"خطأ في Gemini");
+let answer=data?.candidates?.[0]?.content?.parts?.map(x=>x.text||"").join("")||"ما قدرت أرد الآن.";$("transcript").textContent=name+": "+answer;speak(answer)
+}catch(e){$("voiceStatus").textContent="⚠️ "+e.message}
+}
+function speak(text){if(!callActive||!("speechSynthesis"in window))return;try{speechSynthesis.cancel()}catch(e){}let u=new SpeechSynthesisUtterance(text.replace(/[*_#`]/g,""));u.lang="ar-SA";u.rate=.95;u.pitch=character==="sara"?1.1:.85;speaking=true;$("voiceAvatar").classList.add("speaking");$("voiceStatus").textContent="🔊 "+(character==="sara"?"ساره":"عدي")+" يتكلم...";
+u.onend=()=>{speaking=false;$("voiceAvatar").classList.remove("speaking");if(callActive){$("voiceStatus").textContent="🎙️ دورك... أسمعك الآن";setTimeout(listen,400)}};u.onerror=()=>{speaking=false;$("voiceAvatar").classList.remove("speaking");if(callActive)listen()};speechSynthesis.speak(u)}
+$("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendChat()}})
+$("homePrompt").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendHomeMessage()}})
+</script>
+</body>
+</html>
