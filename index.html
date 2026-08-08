@@ -7,16 +7,21 @@
 
 <style>
 *{box-sizing:border-box}
+
 body{
   margin:0;
   font-family:Arial,Tahoma,sans-serif;
   background:#0d0b14;
   color:#fff;
 }
+
 button,input,textarea,select{font:inherit}
 button{cursor:pointer}
 
-.app{min-height:100vh;display:flex}
+.app{
+  min-height:100vh;
+  display:flex;
+}
 
 .sidebar{
   width:250px;
@@ -48,9 +53,14 @@ button{cursor:pointer}
   text-align:right;
 }
 
-.nav button:hover{background:#302743}
+.nav button:hover{
+  background:#302743;
+}
 
-.main{flex:1;min-width:0}
+.main{
+  flex:1;
+  min-width:0;
+}
 
 .top{
   height:70px;
@@ -61,7 +71,10 @@ button{cursor:pointer}
   padding:0 25px;
 }
 
-.character{display:flex;gap:10px}
+.character{
+  display:flex;
+  gap:10px;
+}
 
 .character button{
   border:1px solid #39304e;
@@ -92,11 +105,17 @@ button{cursor:pointer}
   margin:10px 0;
 }
 
-.hero h1 span{color:#8b6cff}
+.hero h1 span{
+  color:#8b6cff;
+}
 
-.hero p{color:#aaa3bd}
+.hero p{
+  color:#aaa3bd;
+}
 
-.chat{display:none}
+.chat{
+  display:none;
+}
 
 .messages{
   min-height:55vh;
@@ -161,6 +180,7 @@ textarea{
   display:flex;
   gap:8px;
   margin-top:10px;
+  flex-wrap:wrap;
 }
 
 .tool{
@@ -171,7 +191,9 @@ textarea{
   padding:9px 13px;
 }
 
-.creator{display:none}
+.creator{
+  display:none;
+}
 
 .creator-card{
   background:#171420;
@@ -229,7 +251,9 @@ textarea{
   padding:20px;
 }
 
-.modal.show{display:flex}
+.modal.show{
+  display:flex;
+}
 
 .modal-card{
   width:min(500px,100%);
@@ -260,7 +284,9 @@ textarea{
   padding:20px;
 }
 
-.voice-call.show{display:flex}
+.voice-call.show{
+  display:flex;
+}
 
 .voice-card{
   width:min(520px,95vw);
@@ -281,7 +307,7 @@ textarea{
   justify-content:center;
   font-size:60px;
   background:linear-gradient(135deg,#7051ff,#bd75ff);
-  transition:transform .3s ease;
+  transition:.3s;
 }
 
 .avatar.speaking{
@@ -322,8 +348,79 @@ textarea{
   color:#fff;
 }
 
-.start{background:#7657ff}
-.stop{background:#332c42}
+.start{
+  background:#7657ff;
+}
+
+.stop{
+  background:#332c42;
+}
+
+.attachment{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  background:#15121f;
+  border:1px solid #352d45;
+  border-radius:14px;
+  padding:10px;
+  margin-top:10px;
+  text-align:right;
+}
+
+.attachment img,
+.attachment video{
+  width:70px;
+  height:55px;
+  object-fit:cover;
+  border-radius:10px;
+}
+
+.attachment .name{
+  flex:1;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.remove{
+  background:#332c42;
+  border:0;
+  color:#fff;
+  border-radius:10px;
+  padding:7px 10px;
+}
+
+.notice{
+  color:#aaa3bd;
+  font-size:13px;
+  line-height:1.7;
+  margin-top:12px;
+}
+
+.loading{
+  padding:10px;
+}
+
+.progress{
+  height:8px;
+  background:#29233a;
+  border-radius:10px;
+  overflow:hidden;
+  margin-top:10px;
+}
+
+.progress i{
+  display:block;
+  width:30%;
+  height:100%;
+  background:#7657ff;
+  animation:load 1.2s infinite alternate;
+}
+
+@keyframes load{
+  to{width:85%}
+}
 
 @media(max-width:700px){
   .sidebar{display:none}
@@ -345,18 +442,29 @@ Study<span>GPT</span> ✦
 
 <div class="nav">
 
-<button onclick="showHome()">🏠 الرئيسية</button>
+<button onclick="showHome()">
+🏠 الرئيسية
+</button>
 
-<button onclick="showChat()">💬 المحادثة</button>
+<button onclick="showChat()">
+💬 المحادثة
+</button>
 
-<button onclick="showCreator()">🎨 إنشاء الصور والفيديو</button>
+<button onclick="showCreator()">
+🎨 إنشاء الصور والفيديو
+</button>
 
-<button onclick="openVoiceCall()">📞 مكالمة مباشرة</button>
+<button onclick="openVoiceCall()">
+📞 مكالمة مباشرة
+</button>
 
-<button onclick="openSettings()">⚙️ إعدادات Gemini</button>
+<button onclick="openSettings()">
+⚙️ إعدادات Gemini
+</button>
 
 </div>
 </aside>
+
 
 <main class="main">
 
@@ -366,25 +474,31 @@ Study<span>GPT</span> ✦
 
 <div class="character">
 
-<button id="saraBtn"
+<button
+id="saraBtn"
 class="active"
 onclick="setCharacter('sara')">
 👩🏻 ساره
 </button>
 
-<button id="adyBtn"
+<button
+id="adyBtn"
 onclick="setCharacter('ady')">
 👨🏻 عدي
 </button>
 
 </div>
+
 </header>
+
 
 <section id="home" class="page">
 
 <div class="hero">
 
-<div style="font-size:50px">✦</div>
+<div style="font-size:50px">
+✦
+</div>
 
 <h1>
 مرحبًا بك في <span>StudyGPT</span>
@@ -394,40 +508,51 @@ onclick="setCharacter('ady')">
 مساعدك الذكي للدراسة والمحادثة وإنشاء الصور والفيديوهات.
 </p>
 
+
 <div class="box" style="margin-top:30px">
 
-<textarea id="homePrompt"
-placeholder="اسألي ساره أو عدي أي شيء..."></textarea>
+<textarea
+id="homePrompt"
+placeholder="اسألي ساره أو عدي أي شيء...">
+</textarea>
 
-<button class="send"
-onclick="sendHomeMessage()">➤</button>
+<button
+class="send"
+onclick="sendHomeMessage()">
+➤
+</button>
 
 </div>
 
+
 <div class="tools">
 
-<button class="tool"
-onclick="document.getElementById('fileInput').click()">
-📎 ملف أو صورة
+<button
+class="tool"
+onclick="pickChatFile()">
+📎 صورة أو فيديو أو ملف
 </button>
 
-<button class="tool"
+<button
+class="tool"
 onclick="showCreator()">
 🎨 إنشاء
 </button>
 
-<button class="tool"
+<button
+class="tool"
 onclick="openVoiceCall()">
 📞 تحدثي معي
 </button>
 
 </div>
 
+
 <input
-id="fileInput"
+id="homeFileInput"
 type="file"
-accept="image/*,.pdf,.txt,.md,.csv"
-style="display:none"
+accept="image/*,video/*,.pdf,.txt,.md,.csv"
+hidden
 onchange="fileSelected(this)"
 >
 
@@ -436,45 +561,65 @@ onchange="fileSelected(this)"
 </section>
 
 
+
 <section id="chat" class="page chat">
 
-<div id="messages" class="messages"></div>
-
-<div id="attachmentStatus"
-style="color:#aaa3bd;margin-bottom:8px">
+<div
+id="messages"
+class="messages">
 </div>
+
+
+<div id="attachmentStatus">
+</div>
+
 
 <div class="composer">
 
 <div class="box">
 
-<textarea id="chatInput"
-placeholder="اكتبي رسالتك..."></textarea>
+<textarea
+id="chatInput"
+placeholder="اكتبي رسالتك...">
+</textarea>
 
-<button class="send"
-onclick="sendChat()">➤</button>
+<button
+class="send"
+onclick="sendChat()">
+➤
+</button>
 
 </div>
 
+
 <div class="tools">
 
-<button class="tool"
-onclick="document.getElementById('chatFile').click()">
-📎 إرفاق
+<button
+class="tool"
+onclick="pickChatFile()">
+📎 إرفاق صورة/فيديو/ملف
 </button>
 
-<button class="tool"
+<button
+class="tool"
+onclick="showCreator()">
+🎨 إنشاء
+</button>
+
+<button
+class="tool"
 onclick="openVoiceCall()">
 📞 مكالمة
 </button>
 
 </div>
 
+
 <input
 id="chatFile"
 type="file"
-accept="image/*,.pdf,.txt,.md,.csv"
-style="display:none"
+accept="image/*,video/*,.pdf,.txt,.md,.csv"
+hidden
 onchange="fileSelected(this)"
 >
 
@@ -483,20 +628,26 @@ onchange="fileSelected(this)"
 </section>
 
 
+
 <section id="creator" class="page creator">
 
 <div class="creator-card">
 
-<h2>🎨 إنشاء بالذكاء الاصطناعي</h2>
+<h2>
+🎨 إنشاء بالذكاء الاصطناعي
+</h2>
 
 <p style="color:#aaa3bd">
-أنشئي صورة أو فيديو باستخدام وصفك.
+أنشئي صورة أو فيديو من وصفك، أو أرفقي صورة لتحويلها.
 </p>
 
-<select id="creatorType">
+
+<select
+id="creatorType"
+onchange="creatorTypeChanged()">
 
 <option value="image">
-🖼️ إنشاء صورة
+🖼️ إنشاء / تعديل صورة
 </option>
 
 <option value="video">
@@ -505,11 +656,13 @@ onchange="fileSelected(this)"
 
 </select>
 
+
 <textarea
 id="creativePrompt"
 rows="5"
-placeholder="مثال: فتاة تدرس في مكتبة جامعية مستقبلية..."
-></textarea>
+placeholder="مثال: فتاة تدرس في مكتبة جامعية مستقبلية...">
+</textarea>
+
 
 <select id="aspect">
 
@@ -527,26 +680,52 @@ placeholder="مثال: فتاة تدرس في مكتبة جامعية مستقب
 
 </select>
 
-<button class="tool"
-onclick="document.getElementById('creativeImage').click()">
-📷 أرفقي صورة لتعديلها
+
+<button
+class="tool"
+style="width:100%"
+onclick="pickCreativeImage()">
+
+📷 أرفقي صورة لاستخدامها
+
 </button>
+
 
 <input
 id="creativeImage"
 type="file"
 accept="image/*"
-style="display:none"
+hidden
 onchange="creativeImageSelected(this)"
 >
 
-<button class="generate"
+
+<div id="creativeAttachment">
+</div>
+
+
+<button
+class="generate"
 onclick="generateCreative()">
+
 ✨ إنشاء الآن
+
 </button>
 
-<div id="creativeResult" class="result">
+
+<div
+id="creativeResult"
+class="result">
+
 النتيجة ستظهر هنا
+
+</div>
+
+
+<div class="notice">
+
+ملاحظة: إنشاء الصور والفيديو يعتمد على النماذج والصلاحيات المتاحة لمفتاح Gemini.
+
 </div>
 
 </div>
@@ -554,16 +733,20 @@ onclick="generateCreative()">
 </section>
 
 </main>
+
 </div>
 
 
-<!-- Settings -->
+
+<!-- SETTINGS -->
 
 <div id="settings" class="modal">
 
 <div class="modal-card">
 
-<h2>⚙️ إعدادات Gemini</h2>
+<h2>
+⚙️ إعدادات Gemini
+</h2>
 
 <p style="color:#aaa3bd">
 ضعي مفتاح Gemini API الخاص بك هنا.
@@ -575,23 +758,36 @@ type="password"
 placeholder="Gemini API Key"
 >
 
-<button class="generate"
+<button
+class="generate"
 onclick="saveKey()">
+
 💾 حفظ المفتاح
+
 </button>
 
-<button class="tool"
+<button
+class="tool"
 style="width:100%;margin-top:10px"
 onclick="closeSettings()">
+
 إغلاق
+
 </button>
 
-</div>
+<p class="notice">
+
+للتجربة الشخصية يمكن حفظ المفتاح في المتصفح.
+
+</p>
 
 </div>
 
+</div>
 
-<!-- Voice Call -->
+
+
+<!-- VOICE -->
 
 <div id="voiceCall" class="voice-call">
 
@@ -616,16 +812,19 @@ onclick="closeSettings()">
 <div class="voice-buttons">
 
 <button
-id="startCallBtn"
 class="start"
 onclick="startVoiceCall()">
+
 🎙️ ابدأ المكالمة
+
 </button>
 
 <button
 class="stop"
 onclick="stopVoiceCall()">
+
 ✕ إنهاء
+
 </button>
 
 </div>
@@ -635,32 +834,34 @@ onclick="stopVoiceCall()">
 </div>
 
 
-<script>
 
-let character="sara";
-let pendingFile=null;
-let creativeFile=null;
+<script>
 
 const $=id=>document.getElementById(id);
 
+let character="sara";
 
-/* Character */
+let pendingFile=null;
+
+let creativeFile=null;
+
+const API_BASE=
+"https://generativelanguage.googleapis.com/v1beta";
+
+
+/* CHARACTER */
 
 function setCharacter(name){
 
 character=name;
 
-$("saraBtn").classList.toggle(
-"active",
-name==="sara"
-);
+$("saraBtn")
+.classList
+.toggle("active",name==="sara");
 
-$("adyBtn").classList.toggle(
-"active",
-name==="ady"
-);
-
-if($("voiceName")){
+$("adyBtn")
+.classList
+.toggle("active",name==="ady");
 
 $("voiceName").textContent=
 name==="sara"?"ساره":"عدي";
@@ -670,10 +871,8 @@ name==="sara"?"👩🏻":"👨🏻";
 
 }
 
-}
 
-
-/* Navigation */
+/* NAVIGATION */
 
 function showHome(){
 
@@ -683,6 +882,7 @@ $("creator").style.display="none";
 
 }
 
+
 function showChat(){
 
 $("home").style.display="none";
@@ -690,6 +890,7 @@ $("chat").style.display="block";
 $("creator").style.display="none";
 
 }
+
 
 function showCreator(){
 
@@ -700,7 +901,7 @@ $("creator").style.display="block";
 }
 
 
-/* Gemini Settings */
+/* SETTINGS */
 
 function openSettings(){
 
@@ -711,11 +912,13 @@ $("settings").classList.add("show");
 
 }
 
+
 function closeSettings(){
 
 $("settings").classList.remove("show");
 
 }
+
 
 function saveKey(){
 
@@ -724,6 +927,7 @@ const key=$("apiKey").value.trim();
 if(!key){
 
 alert("ضعي مفتاح Gemini أولًا");
+
 return;
 
 }
@@ -740,7 +944,25 @@ closeSettings();
 }
 
 
-/* File */
+function getKey(){
+
+return localStorage.getItem(
+"studygpt_gemini_key"
+)||"";
+
+}
+
+
+/* FILE PICKER */
+
+function pickChatFile(){
+
+showChat();
+
+$("chatFile").click();
+
+}
+
 
 function fileSelected(input){
 
@@ -748,47 +970,121 @@ const file=input.files[0];
 
 if(!file)return;
 
-if(file.size>20*1024*1024){
+if(file.size>100*1024*1024){
 
-alert("حجم الملف أكبر من 20MB");
+alert("حجم الملف أكبر من 100MB.");
+
 return;
 
 }
 
-const reader=new FileReader();
+pendingFile=file;
 
-reader.onload=()=>{
+renderAttachmentStatus(file);
 
-pendingFile={
-name:file.name,
-type:file.type,
-data:reader.result
-};
-
-$("attachmentStatus").textContent=
-"📎 تم إرفاق: "+file.name;
-
-};
-
-reader.readAsDataURL(file);
+input.value="";
 
 }
 
 
-function dataParts(dataURL){
+function renderAttachmentStatus(file){
 
-const match=
-dataURL.match(/^data:([^;]+);base64,(.*)$/s);
+const url=
+URL.createObjectURL(file);
+
+let preview="📄";
+
+if(file.type.startsWith("image/")){
+
+preview=
+`<img src="${url}" alt="">`;
+
+}
+
+else if(file.type.startsWith("video/")){
+
+preview=
+`<video src="${url}" muted></video>`;
+
+}
+
+$("attachmentStatus").innerHTML=`
+
+<div class="attachment">
+
+${preview}
+
+<div class="name">
+${escapeHtml(file.name)}
+</div>
+
+<button
+class="remove"
+onclick="clearPendingFile()">
+
+إزالة
+
+</button>
+
+</div>
+
+`;
+
+}
+
+
+function clearPendingFile(){
+
+pendingFile=null;
+
+$("attachmentStatus").innerHTML="";
+
+}
+
+
+function escapeHtml(text){
+
+return String(text)
+.replace(/[&<>"']/g,function(m){
 
 return {
-mime:match[1],
-data:match[2]
-};
+
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#039;"
+
+}[m];
+
+});
 
 }
 
 
-/* Home */
+/* CHAT */
+
+function addMessage(type,text){
+
+const div=
+document.createElement("div");
+
+div.className=
+"message "+type;
+
+div.textContent=text;
+
+$("messages").appendChild(div);
+
+div.scrollIntoView({
+behavior:"smooth",
+block:"end"
+});
+
+return div;
+
+}
+
 
 function sendHomeMessage(){
 
@@ -808,9 +1104,7 @@ askGemini(text,null);
 }
 
 
-/* Chat */
-
-function sendChat(){
+async function sendChat(){
 
 const text=
 $("chatInput").value.trim();
@@ -821,200 +1115,316 @@ $("chatInput").value="";
 
 showChat();
 
-let message=text;
+const file=pendingFile;
 
-if(pendingFile){
+let label=text;
 
-message=
-"📎 "+pendingFile.name+
-"\n"+
-(text||"اشرح لي هذا الملف");
+if(file){
+
+label=
+(text?text+"\n":"")+
+"📎 "+file.name;
 
 }
 
-addMessage("user",message);
+addMessage("user",label);
 
-const file=pendingFile;
+clearPendingFile();
 
-pendingFile=null;
-
-$("attachmentStatus").textContent="";
-
-askGemini(
-text||"اشرح لي هذا الملف",
+await askGemini(
+text||"حلل هذا الملف واشرحه لي.",
 file
 );
 
 }
 
 
-function addMessage(type,text){
+/* FILE DATA */
 
-const div=document.createElement("div");
+function dataURL(file){
 
-div.className="message "+type;
+return new Promise(
+(resolve,reject)=>{
 
-div.textContent=text;
+const reader=
+new FileReader();
 
-$("messages").appendChild(div);
+reader.onload=
+()=>resolve(reader.result);
 
-window.scrollTo({
-top:document.body.scrollHeight,
-behavior:"smooth"
+reader.onerror=
+reject;
+
+reader.readAsDataURL(file);
+
 });
 
 }
 
 
-/* Gemini Chat */
+function dataParts(dataURL){
+
+const match=
+dataURL.match(
+/^data:([^;]+);base64,(.*)$/s
+);
+
+if(!match){
+
+throw new Error(
+"تعذر قراءة الملف."
+);
+
+}
+
+return{
+
+mime:match[1],
+data:match[2]
+
+};
+
+}
+
+
+/* GEMINI CHAT */
 
 async function askGemini(text,file){
 
-const key=
-localStorage.getItem("studygpt_gemini_key");
+const key=getKey();
 
 if(!key){
 
 openSettings();
+
 return;
 
 }
 
 const name=
-character==="sara"?"ساره":"عدي";
+character==="sara"
+?"ساره"
+:"عدي";
 
+const ai=
 addMessage(
 "ai",
 "⏳ "+name+" يفكر..."
 );
 
+
 try{
 
-const parts=[];
+const parts=[
 
-parts.push({
+{
+
 text:
-character==="sara"
-?
-"أنت ساره، مساعدة دراسة أنثى في StudyGPT. كوني لطيفة وذكية واشرحي بطريقة سهلة. أجيبي بالعربية."
-:
-"أنت عدي، مساعد دراسة ذكر في StudyGPT. كن هادئًا وذكيًا واشرح بطريقة سهلة. أجب بالعربية."
-});
 
-parts.push({
-text:text
-});
+character==="sara"
+
+?
+
+"أنت ساره، مساعدة دراسة لطيفة وذكية في StudyGPT. أجيبي بالعربية وبأسلوب واضح ومختصر."
+
+:
+
+"أنت عدي، مساعد دراسة هادئ وذكي في StudyGPT. أجب بالعربية وبأسلوب واضح ومختصر."
+
+},
+
+{
+
+text:
+text||
+"حلل الملف المرفق واشرح أهم ما فيه."
+
+}
+
+];
+
 
 if(file){
 
-const p=dataParts(file.data);
-
 if(
-file.type.startsWith("image/")||
+file.type.startsWith("image/")
+){
+
+const p=
+dataParts(
+await dataURL(file)
+);
+
+parts.push({
+
+inlineData:{
+
+mimeType:p.mime,
+
+data:p.data
+
+}
+
+});
+
+}
+
+else if(
+file.type.startsWith("video/")
+){
+
+const p=
+dataParts(
+await dataURL(file)
+);
+
+parts.push({
+
+inlineData:{
+
+mimeType:p.mime,
+
+data:p.data
+
+}
+
+});
+
+}
+
+else if(
 file.type==="application/pdf"
 ){
 
+const p=
+dataParts(
+await dataURL(file)
+);
+
 parts.push({
+
 inlineData:{
+
 mimeType:p.mime,
+
 data:p.data
+
 }
+
 });
 
-}else{
+}
 
-try{
+else if(
+file.type.startsWith("text/")||
+/\.(txt|md|csv)$/i.test(file.name)
+){
 
-const raw=atob(p.data);
+const raw=
+await file.text();
 
 parts.push({
+
 text:
 "محتوى الملف:\n"+
-raw.slice(0,150000)
+raw.slice(0,200000)
+
 });
 
-}catch(e){}
-
 }
 
 }
+
 
 const response=
 await fetch(
-"https://generativelanguage.googleapis.com/v1/models/gemini-3.6-flash:generateContent",
+
+API_BASE+
+"/models/gemini-2.5-flash:generateContent",
+
 {
 
 method:"POST",
 
 headers:{
-"Content-Type":"application/json",
-"x-goog-api-key":key
+
+"Content-Type":
+"application/json",
+
+"x-goog-api-key":
+key
+
 },
 
 body:JSON.stringify({
 
 contents:[
+
 {
+
 role:"user",
+
 parts:parts
+
 }
+
 ]
 
 })
 
 }
+
 );
+
 
 const data=
 await response.json();
 
+
 if(!response.ok){
 
 throw new Error(
+
 data?.error?.message||
 "حدث خطأ في Gemini"
+
 );
 
 }
+
 
 const answer=
-data?.candidates?.[0]?.content?.parts
+data?.candidates?.[0]
+?.content?.parts
 ?.map(x=>x.text||"")
-.join("")||
+.join("")
+||
 "لم يصل رد.";
 
-const messages=
-document.querySelectorAll(
-".message.ai"
-);
 
-if(messages.length){
+ai.textContent=answer;
 
-messages[messages.length-1]
-.textContent=answer;
 
 }
 
-}catch(error){
+catch(error){
 
-const messages=
-document.querySelectorAll(
-".message.ai"
-);
-
-if(messages.length){
-
-messages[messages.length-1]
-.textContent="⚠️ "+error.message;
-
-}
+ai.textContent=
+"⚠️ "+error.message;
 
 }
 
 }
 
 
-/* Creative Image */
+/* CREATOR */
+
+function pickCreativeImage(){
+
+$("creativeImage").click();
+
+}
+
 
 function creativeImageSelected(input){
 
@@ -1022,40 +1432,86 @@ const file=input.files[0];
 
 if(!file)return;
 
-const reader=new FileReader();
+if(!file.type.startsWith("image/")){
 
-reader.onload=()=>{
+alert("اختاري صورة فقط.");
 
-creativeFile={
-type:file.type,
-data:reader.result
-};
+return;
 
-};
+}
 
-reader.readAsDataURL(file);
+creativeFile=file;
+
+input.value="";
+
+const url=
+URL.createObjectURL(file);
+
+$("creativeAttachment").innerHTML=`
+
+<div class="attachment">
+
+<img src="${url}">
+
+<div class="name">
+${escapeHtml(file.name)}
+</div>
+
+<button
+class="remove"
+onclick="
+creativeFile=null;
+$('creativeAttachment').innerHTML='';
+">
+
+إزالة
+
+</button>
+
+</div>
+
+`;
 
 }
 
 
+function creatorTypeChanged(){
+
+const type=
+$("creatorType").value;
+
+$("creativeResult").textContent=
+type==="image"
+?
+"النتيجة ستظهر هنا"
+:
+"الفيديو قد يستغرق عدة دقائق.";
+
+}
+
+
+/* CREATE */
+
 async function generateCreative(){
 
-const key=
-localStorage.getItem("studygpt_gemini_key");
+const key=getKey();
 
 if(!key){
 
 openSettings();
+
 return;
 
 }
 
 const prompt=
-$("creativePrompt").value.trim();
+$("creativePrompt")
+.value.trim();
 
 if(!prompt){
 
-alert("اكتبي وصفًا للصورة أو الفيديو");
+alert("اكتبي وصفًا أولًا.");
+
 return;
 
 }
@@ -1066,86 +1522,164 @@ $("creatorType").value;
 const result=
 $("creativeResult");
 
-if(type==="image"){
-
 result.innerHTML=
-"🖼️ جاري إنشاء الصورة...";
+"⏳ جاري الإنشاء...";
+
 
 try{
 
+if(type==="image"){
+
+await generateImage(
+prompt,
+key,
+result
+);
+
+}
+
+else{
+
+await generateVideo(
+prompt,
+key,
+result
+);
+
+}
+
+}
+
+catch(error){
+
+result.textContent=
+"⚠️ "+error.message;
+
+}
+
+}
+
+
+/* IMAGE GENERATION */
+
+async function generateImage(
+prompt,
+key,
+result
+){
+
 const parts=[
+
 {
+
 text:
 "Create a high quality image based on this request: "+
 prompt
+
 }
+
 ];
+
 
 if(creativeFile){
 
 const p=
-dataParts(creativeFile.data);
+dataParts(
+await dataURL(creativeFile)
+);
 
 parts.push({
+
 inlineData:{
+
 mimeType:p.mime,
+
 data:p.data
+
 }
+
 });
 
 }
 
+
 const response=
 await fetch(
-"https://generativelanguage.googleapis.com/v1/models/gemini-3.1-flash-image:generateContent",
+
+API_BASE+
+"/models/gemini-2.5-flash-image:generateContent",
+
 {
 
 method:"POST",
 
 headers:{
-"Content-Type":"application/json",
-"x-goog-api-key":key
+
+"Content-Type":
+"application/json",
+
+"x-goog-api-key":
+key
+
 },
 
 body:JSON.stringify({
 
 contents:[
+
 {
+
 parts:parts
+
 }
+
 ],
 
 generationConfig:{
-responseModalities:["IMAGE"],
-responseFormat:{
-image:{
-aspectRatio:$("aspect").value
-}
-}
+
+responseModalities:[
+"IMAGE"
+]
+
 }
 
 })
 
 }
+
 );
+
 
 const data=
 await response.json();
 
+
 if(!response.ok){
 
 throw new Error(
+
 data?.error?.message||
-"فشل إنشاء الصورة"
+"فشل إنشاء الصورة."
+
 );
 
 }
 
+
 const image=
-data?.candidates?.[0]?.content?.parts
+data?.candidates?.[0]
+?.content?.parts
 ?.find(x=>x.inlineData);
 
-if(image){
+
+if(!image){
+
+throw new Error(
+"لم يرجع النموذج صورة. تأكدي من صلاحية نموذج الصور."
+);
+
+}
+
 
 const src=
 "data:"+
@@ -1153,56 +1687,240 @@ image.inlineData.mimeType+
 ";base64,"+
 image.inlineData.data;
 
-result.innerHTML=
-'<img src="'+src+'">'+
-'<br><br>'+
-'<a class="generate" download="studygpt-image.png" href="'+src+'">⬇️ حفظ الصورة</a>';
 
-}else{
+result.innerHTML=`
 
-result.innerHTML=
-"لم يرجع Gemini صورة. تأكدي من أن مفتاح Gemini يسمح باستخدام نموذج توليد الصور.";
+<img
+src="${src}"
+alt="StudyGPT">
 
-}
+<br><br>
 
-}catch(e){
+<a
+class="generate"
+style="display:inline-block;text-decoration:none"
+download="studygpt-image.png"
+href="${src}">
 
-result.innerHTML=
-"⚠️ "+e.message;
+⬇️ حفظ الصورة
 
-}
+</a>
 
-}else{
-
-result.innerHTML=
-"🎬 جاري تجهيز الفيديو...<br><br>"+
-"توليد الفيديو يحتاج نموذج Veo وصلاحية Video Generation في مفتاح Gemini.";
-
-}
+`;
 
 }
 
 
-/* Voice */
+/* VIDEO */
+
+async function generateVideo(
+prompt,
+key,
+result
+){
+
+const response=
+await fetch(
+
+API_BASE+
+"/models/veo-3.1-generate-preview:predictLongRunning",
+
+{
+
+method:"POST",
+
+headers:{
+
+"Content-Type":
+"application/json",
+
+"x-goog-api-key":
+key
+
+},
+
+body:JSON.stringify({
+
+instances:[
+
+{
+
+prompt:prompt
+
+}
+
+],
+
+parameters:{
+
+aspectRatio:
+$("aspect").value
+
+}
+
+})
+
+}
+
+);
+
+
+const operation=
+await response.json();
+
+
+if(!response.ok){
+
+throw new Error(
+
+operation?.error?.message||
+"فشل بدء إنشاء الفيديو. قد لا يكون Veo متاحًا لمفتاحك."
+
+);
+
+}
+
+
+if(!operation.name){
+
+throw new Error(
+"لم يرجع Gemini عملية إنشاء الفيديو."
+);
+
+}
+
+
+for(let i=0;i<90;i++){
+
+await new Promise(
+resolve=>setTimeout(resolve,5000)
+);
+
+
+const statusResponse=
+await fetch(
+
+API_BASE+
+"/"+operation.name,
+
+{
+
+headers:{
+
+"x-goog-api-key":
+key
+
+}
+
+}
+
+);
+
+
+const status=
+await statusResponse.json();
+
+
+if(status.error){
+
+throw new Error(
+status.error.message
+);
+
+}
+
+
+result.innerHTML=
+"🎬 جاري إنشاء الفيديو... "+
+Math.round((i+1)/90*100)+
+"%";
+
+
+if(status.done){
+
+const uri=
+status
+?.response
+?.generateVideoResponse
+?.generatedSamples
+?.[0]
+?.video
+?.uri;
+
+
+if(!uri){
+
+throw new Error(
+"لم يتم إرجاع الفيديو."
+);
+
+}
+
+
+const videoUrl=
+uri+
+(uri.includes("?")?"&":"?")+
+"key="+
+encodeURIComponent(key);
+
+
+result.innerHTML=`
+
+<video
+controls
+playsinline
+src="${videoUrl}">
+</video>
+
+<br><br>
+
+<a
+class="generate"
+style="display:inline-block;text-decoration:none"
+href="${videoUrl}"
+download="studygpt-video.mp4">
+
+⬇️ حفظ الفيديو
+
+</a>
+
+`;
+
+return;
+
+}
+
+}
+
+throw new Error(
+"استغرق إنشاء الفيديو وقتًا طويلًا."
+);
+
+}
+
+
+/* VOICE */
 
 let recognition=null;
+
 let callActive=false;
+
 let speaking=false;
 
 
 function openVoiceCall(){
 
-const key=
-localStorage.getItem("studygpt_gemini_key");
-
-if(!key){
+if(!getKey()){
 
 openSettings();
+
 return;
 
 }
 
-$("voiceCall").classList.add("show");
+$("voiceCall")
+.classList
+.add("show");
 
 setCharacter(character);
 
@@ -1218,31 +1936,43 @@ $("transcript").textContent=
 function stopVoiceCall(){
 
 callActive=false;
+
 speaking=false;
 
 if(recognition){
 
 try{
+
 recognition.abort();
-}catch(e){}
+
+}
+catch(e){}
 
 recognition=null;
 
 }
 
-if("speechSynthesis"in window){
+if(
+"speechSynthesis"
+in window
+){
 
 try{
+
 speechSynthesis.cancel();
-}catch(e){}
+
+}
+catch(e){}
 
 }
 
 $("voiceAvatar")
-.classList.remove("speaking");
+.classList
+.remove("speaking");
 
 $("voiceCall")
-.classList.remove("show");
+.classList
+.remove("show");
 
 }
 
@@ -1253,32 +1983,38 @@ const SpeechRecognition=
 window.SpeechRecognition||
 window.webkitSpeechRecognition;
 
+
 if(!SpeechRecognition){
 
 $("voiceStatus").textContent=
-"المتصفح لا يدعم التعرف على الصوت. جربي Chrome أو افتحي الموقع من https.";
+"المتصفح لا يدعم التعرف على الصوت. جربي Chrome.";
 
 return;
 
 }
 
-/*
-لا نطلب getUserMedia هنا.
-SpeechRecognition نفسه يطلب إذن الميكروفون.
-*/
-
-if("speechSynthesis"in window){
 
 try{
-speechSynthesis.resume();
-}catch(e){}
+
+await navigator
+.mediaDevices
+.getUserMedia({
+audio:true
+});
 
 }
 
-callActive=true;
+catch(e){
 
 $("voiceStatus").textContent=
-"🎙️ جاري تشغيل الميكروفون...";
+"يرجى السماح بصلاحية الميكروفون.";
+
+return;
+
+}
+
+
+callActive=true;
 
 listen();
 
@@ -1289,35 +2025,34 @@ function listen(){
 
 if(!callActive||speaking)return;
 
+
 const SpeechRecognition=
 window.SpeechRecognition||
 window.webkitSpeechRecognition;
 
-try{
 
 recognition=
 new SpeechRecognition();
 
-}catch(e){
 
-$("voiceStatus").textContent=
-"خطأ في تهيئة التعرف على الصوت.";
+recognition.lang=
+"ar-SA";
 
-return;
-
-}
-
-recognition.lang="ar-SA";
 recognition.continuous=false;
+
 recognition.interimResults=false;
+
 
 $("voiceStatus").textContent=
 "🎙️ أسمعك... تكلمي الآن";
 
-recognition.onresult=event=>{
+
+recognition.onresult=
+event=>{
 
 const text=
-event.results[0][0].transcript;
+event.results[0][0]
+.transcript;
 
 $("transcript").textContent=
 "أنتِ: "+text;
@@ -1327,27 +2062,13 @@ voiceAsk(text);
 };
 
 
-recognition.onerror=event=>{
+recognition.onerror=
+event=>{
 
-if(!callActive||speaking)return;
-
-if(
-event.error==="not-allowed"||
-event.error==="service-not-allowed"
-){
+if(callActive&&!speaking){
 
 $("voiceStatus").textContent=
-"⚠️ الميكروفون مفعّل، لكن المتصفح يمنع التعرف الصوتي لهذا الملف. افتحي StudyGPT من رابط https أو اسمحي للميكروفون للموقع.";
-
-}else if(event.error==="audio-capture"){
-
-$("voiceStatus").textContent=
-"⚠️ لم أستطع الوصول للميكروفون. تأكدي أنه غير مستخدم في تطبيق آخر.";
-
-}else{
-
-$("voiceStatus").textContent=
-"لم أسمعك جيدًا، اضغطي «ابدأ المكالمة» وحاولي مرة أخرى 🎙️";
+"لم أسمعك جيدًا، حاولي مرة أخرى.";
 
 }
 
@@ -1358,12 +2079,10 @@ recognition.onend=()=>{
 
 if(callActive&&!speaking){
 
-setTimeout(()=>{
-
-if(callActive&&!speaking)
-listen();
-
-},500);
+setTimeout(
+listen,
+500
+);
 
 }
 
@@ -1374,69 +2093,96 @@ try{
 
 recognition.start();
 
-}catch(e){}
+}
+catch(e){}
 
 }
 
 
-/* Voice Gemini */
+/* VOICE GEMINI */
 
 async function voiceAsk(text){
 
-const key=
-localStorage.getItem("studygpt_gemini_key");
+const key=getKey();
 
 const name=
-character==="sara"?"ساره":"عدي";
+character==="sara"
+?"ساره"
+:"عدي";
+
 
 $("voiceStatus").textContent=
 "⏳ "+name+" يفكر...";
+
 
 try{
 
 const system=
 character==="sara"
+
 ?
-"أنت ساره، مساعدة صوتية أنثى. تحدثي بالعربية السعودية بشكل طبيعي ولطيف. اجعلي ردك قصيرًا وطبيعيًا كأنها مكالمة هاتفية."
+
+"أنت ساره، مساعدة صوتية لطيفة. تحدثي بالعربية السعودية بشكل طبيعي واجعلي ردك قصيرًا."
+
 :
-"أنت عدي، مساعد صوتي ذكر. تحدث بالعربية السعودية بشكل طبيعي وهادئ. اجعل ردك قصيرًا وطبيعيًا كأنها مكالمة هاتفية.";
+
+"أنت عدي، مساعد صوتي هادئ. تحدث بالعربية السعودية بشكل طبيعي واجعل ردك قصيرًا.";
+
 
 const response=
 await fetch(
-"https://generativelanguage.googleapis.com/v1/models/gemini-3.6-flash:generateContent",
+
+API_BASE+
+"/models/gemini-2.5-flash:generateContent",
+
 {
 
 method:"POST",
 
 headers:{
-"Content-Type":"application/json",
-"x-goog-api-key":key
+
+"Content-Type":
+"application/json",
+
+"x-goog-api-key":
+key
+
 },
 
 body:JSON.stringify({
 
 systemInstruction:{
+
 parts:[
 {text:system}
 ]
+
 },
 
 contents:[
+
 {
+
 role:"user",
+
 parts:[
 {text:text}
 ]
+
 }
+
 ]
 
 })
 
 }
+
 );
+
 
 const data=
 await response.json();
+
 
 if(!response.ok){
 
@@ -1447,112 +2193,145 @@ data?.error?.message||
 
 }
 
+
 const answer=
-data?.candidates?.[0]?.content?.parts
+data?.candidates?.[0]
+?.content?.parts
 ?.map(x=>x.text||"")
-.join("")||
+.join("")
+||
 "ما قدرت أرد الآن.";
+
 
 $("transcript").textContent=
 name+": "+answer;
 
+
 speak(answer);
 
-}catch(e){
+
+}
+
+catch(error){
 
 $("voiceStatus").textContent=
-"⚠️ "+e.message;
+"⚠️ "+error.message;
 
 }
 
 }
 
 
-/* Voice Output */
+/* SPEECH */
 
 function speak(text){
 
-if(!callActive)return;
+if(
+!callActive||
+!("speechSynthesis"in window)
+)return;
 
-if(!("speechSynthesis"in window)){
-
-$("voiceStatus").textContent=
-"متصفحك لا يدعم قراءة الصوت تلقائيًا.";
-
-return;
-
-}
 
 try{
 
 speechSynthesis.cancel();
 
-}catch(e){}
+}
+catch(e){}
+
 
 const utterance=
 new SpeechSynthesisUtterance(
 text.replace(/[*_#`]/g,"")
 );
 
-utterance.lang="ar-SA";
+
+utterance.lang=
+"ar-SA";
+
 utterance.rate=.95;
+
 utterance.pitch=
-character==="sara"?1.1:.85;
+character==="sara"
+?1.1
+:.85;
+
 
 speaking=true;
 
+
 $("voiceAvatar")
-.classList.add("speaking");
+.classList
+.add("speaking");
+
 
 $("voiceStatus").textContent=
 "🔊 "+
 (character==="sara"?"ساره":"عدي")+
 " يتكلم...";
 
+
 utterance.onend=()=>{
 
 speaking=false;
 
 $("voiceAvatar")
-.classList.remove("speaking");
+.classList
+.remove("speaking");
+
 
 if(callActive){
 
 $("voiceStatus").textContent=
 "🎙️ دورك... أسمعك الآن";
 
-setTimeout(listen,400);
+setTimeout(
+listen,
+400
+);
 
 }
 
 };
+
 
 utterance.onerror=()=>{
 
 speaking=false;
 
 $("voiceAvatar")
-.classList.remove("speaking");
+.classList
+.remove("speaking");
 
-if(callActive)
+if(callActive){
+
 listen();
+
+}
 
 };
 
-speechSynthesis.speak(utterance);
+
+speechSynthesis.speak(
+utterance
+);
 
 }
 
 
-/* Enter */
+/* ENTER */
 
-$("chatInput").addEventListener(
+$("chatInput")
+.addEventListener(
 "keydown",
-e=>{
+event=>{
 
-if(e.key==="Enter"&&!e.shiftKey){
+if(
+event.key==="Enter"&&
+!event.shiftKey
+){
 
-e.preventDefault();
+event.preventDefault();
 
 sendChat();
 
@@ -1561,13 +2340,17 @@ sendChat();
 });
 
 
-$("homePrompt").addEventListener(
+$("homePrompt")
+.addEventListener(
 "keydown",
-e=>{
+event=>{
 
-if(e.key==="Enter"&&!e.shiftKey){
+if(
+event.key==="Enter"&&
+!event.shiftKey
+){
 
-e.preventDefault();
+event.preventDefault();
 
 sendHomeMessage();
 
